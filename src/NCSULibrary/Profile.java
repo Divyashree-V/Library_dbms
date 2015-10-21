@@ -312,31 +312,10 @@ public class Profile extends javax.swing.JFrame {
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
-               System.out.println("-------- Oracle JDBC Connection Testing ------");
-
 		try {
 
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-
-		} catch (ClassNotFoundException e) {
-
-			System.out.println("Where is your Oracle JDBC Driver?");
-			e.printStackTrace();
-			return;
-
-		}
-
-		System.out.println("Oracle JDBC Driver Registered!");
-
-		Connection connection = null;
-
-		try {
-
-			connection = DriverManager.getConnection(
-					"jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:ORCL", "sgulati2",
-					"200109633");
 			//Statement stmt = connection.createStatement();
-                        PreparedStatement stmt = connection.prepareStatement("update students set fname=?,lname=?,password=?,phone=?,altphone=?,address=?,sex=?,nationality=?,department=?,degree=?,category=? where studentno=?");
+                        PreparedStatement stmt = GlobalData.connection.prepareStatement("update students set fname=?,lname=?,password=?,phone=?,altphone=?,address=?,sex=?,nationality=?,department=?,degree=?,category=? where studentno=?");
 
                    stmt.setString(1,jTextFirstName.getText().toString());
                    stmt.setString(2,jTextLastName.getText().toString());
@@ -384,8 +363,6 @@ public class Profile extends javax.swing.JFrame {
 		      // Close the Statement
 		      stmt.close();
 
-		      // Close the connection
-		      connection.close();  
 
 		} catch (SQLException e) {
 
@@ -395,11 +372,6 @@ public class Profile extends javax.swing.JFrame {
 
 		}
 
-		if (connection != null) {
-			System.out.println("You made it, take control your database now!");
-		} else {
-			System.out.println("Failed to make connection!");
-		}
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
@@ -410,31 +382,8 @@ public class Profile extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        System.out.println("-------- Oracle JDBC Connection Testing ------");
-
 		try {
-
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-
-		} catch (ClassNotFoundException e) {
-
-			System.out.println("Where is your Oracle JDBC Driver?");
-			e.printStackTrace();
-			return;
-
-		}
-
-		System.out.println("Oracle JDBC Driver Registered!");
-
-		Connection connection = null;
-
-		try {
-
-			connection = DriverManager.getConnection(
-					"jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:ORCL", "sgulati2",
-					"200109633");
-			//Statement stmt = connection.createStatement();
-                        PreparedStatement stmt = connection.prepareStatement("SELECT * from students where studentno=?");   
+                        PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT * from students where studentno=?");   
                    stmt.setString(1,GlobalData.loginSession);
 		   // ResultSet rs = stmt.executeQuery("SELECT * from students where fname='?'"+jTextField1.getText());
                     ResultSet rs = stmt.executeQuery(); 
@@ -466,8 +415,6 @@ public class Profile extends javax.swing.JFrame {
 		      // Close the Statement
 		      stmt.close();
 
-		      // Close the connection
-		      connection.close();  
 
 		} catch (SQLException e) {
 
@@ -477,11 +424,6 @@ public class Profile extends javax.swing.JFrame {
 
 		}
 
-		if (connection != null) {
-			System.out.println("You made it, take control your database now!");
-		} else {
-			System.out.println("Failed to make connection!");
-		}
     }//GEN-LAST:event_formWindowOpened
 
     private void jButtonShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShowActionPerformed
@@ -489,29 +431,12 @@ public class Profile extends javax.swing.JFrame {
         //CreateConnection connection = new CreateConnection();
         System.out.println("-------- Oracle JDBC Connection Testing ------");
 
-        try {
+        
 
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-
-        } catch (ClassNotFoundException e) {
-
-            System.out.println("Where is your Oracle JDBC Driver?");
-            e.printStackTrace();
-            return;
-
-        }
-
-        System.out.println("Oracle JDBC Driver Registered!");
-
-        Connection connection = null;
 
         try {
 
-            connection = DriverManager.getConnection(
-                "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:ORCL", "sgulati2",
-                "200109633");
-            //Statement stmt = connection.createStatement();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * from students where studentno=?");
+            PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT * from students where studentno=?");
             stmt.setString(1,jTextField1.getText());
             // ResultSet rs = stmt.executeQuery("SELECT * from students where fname='?'"+jTextField1.getText());
             ResultSet rs = stmt.executeQuery();
@@ -542,8 +467,6 @@ public class Profile extends javax.swing.JFrame {
             // Close the Statement
             stmt.close();
 
-            // Close the connection
-            connection.close();
 
         } catch (SQLException e) {
 
@@ -553,11 +476,6 @@ public class Profile extends javax.swing.JFrame {
 
         }
 
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-        } else {
-            System.out.println("Failed to make connection!");
-        }
     }//GEN-LAST:event_jButtonShowActionPerformed
 
     /**
