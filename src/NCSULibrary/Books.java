@@ -364,16 +364,21 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
         // TODO add your handling code here:
         try {
 
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where isbn=? and studentno=?");
+            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where studentno=? and isbn=? and actualreturndate is NULL");
         
-                   stmt.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
-                   stmt.setString(2,GlobalData.loginSession);
+                    stmt.setString(1,GlobalData.loginSession);
+                    stmt.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
                    stmt.executeUpdate();
                    
             PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies + 1 where ISBN=?");
-            stmt1.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
+            stmt1.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
             stmt1.executeUpdate();
-      
+            
+            PreparedStatement stmt2 = GlobalData.connection.prepareStatement("update students set dues=dues + 2*(CEIL(sysdate-to_date(?))) where ISBN=? and studentno=(select studentno from students where studentno=?)");
+            stmt2.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
+            stmt2.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),4).toString() );
+            stmt2.setString(3,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
+            stmt2.executeUpdate();
 
             // Close the Statement
             stmt.close();
@@ -392,14 +397,14 @@ JOptionPane.showMessageDialog(null, "Your book has been returned", "Success", JO
     private void jButtonRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRenewActionPerformed
         // TODO add your handling code here:
         try {       
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where ISBN=? and studentno=?");
-                   stmt.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
+            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where ISBN=? and studentno=? and actualreturndate is NULL");
+                   stmt.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
                    stmt.setString(2,GlobalData.loginSession);
                    stmt.executeUpdate();
                    
             PreparedStatement stmt1 = GlobalData.connection.prepareStatement("insert into s_books_history values(?,?,sysdate,NULL,NULL)");
                    stmt1.setString(1,GlobalData.loginSession);
-                   stmt1.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
+                   stmt1.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
                    stmt1.executeUpdate();
       
 
