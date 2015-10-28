@@ -1,7 +1,6 @@
 CREATE TABLE  "STUDENTS" 
    (	"STUDENTNO" VARCHAR2(20) PRIMARY KEY,
-	"FNAME" VARCHAR2(100) NOT NULL,
-	"LNAME" VARCHAR2(100) NOT NULL, 
+	"NAME" VARCHAR2(100) NOT NULL,
 	"EMAIL" VARCHAR2(50) NOT NULL, 
 	"PASSWORD" VARCHAR2(50) NOT NULL, 
 	"PHONE" NUMBER(15,0), 
@@ -12,12 +11,13 @@ CREATE TABLE  "STUDENTS"
 	"NATIONALITY" VARCHAR2(30), 
 	"DEPARTMENT" VARCHAR2(100), 
 	"DEGREE" VARCHAR2(100), 
-	"CATEGORY" VARCHAR2(100), 
+	"CATEGORY" VARCHAR2(100),
+        "CLASSIFICATION" VARCHAR2(100), 
 	"DUES" FLOAT(10), 
 	 CONSTRAINT "CHK_SEX" CHECK (SEX IN ('M','F'))
    );
 insert into students values(
-1,'shivam','gulati',
+1,'shivam gulati',
 'sgulati2@ncsu.edu',
 '123',
 999999,
@@ -28,13 +28,13 @@ insert into students values(
 'Indian',
 'dept a',
 'degree a',
-'grduate',
+'First Year',
+'Graduate'
 0
 )
 CREATE TABLE  "FACULTY" 
    (	"FACULTYNO" VARCHAR2(15) PRIMARY KEY,
-	"FNAME" VARCHAR2(50) NOT NULL, 
-	"LNAME" VARCHAR2(50) NOT NULL, 
+	"NAME" VARCHAR2(50) NOT NULL,  
 	"EMAIL" VARCHAR2(50) NOT NULL, 
 	"PASSWORD" VARCHAR2(25) NOT NULL, 
 	"CATEGORY" VARCHAR2(50), 
@@ -42,7 +42,9 @@ CREATE TABLE  "FACULTY"
 	"DEPARTMENT" VARCHAR2(50), 
 	"COURSE_TAUGHT" VARCHAR2(30), 
 	 CONSTRAINT "CHK_CATEGORY" CHECK (CATEGORY IN ('Assistant Professor','Associate Professor','Professor','Lecturer'))
-   );
+          CONSTRAINT "FACULTY_FK" FOREIGN KEY ("COURSE_TAUGHT")
+	  REFERENCES  "COURSES" ("COURSEID")
+);
 
 CREATE TABLE "LIBRARY"
  ( LIBID NUMBER(2) PRIMARY KEY,
@@ -54,28 +56,32 @@ insert into Library values(2,'DH Hill');
 
 
 CREATE TABLE  "ROOMS" 
-   (	"ROOMID" NUMBER(5,0) NOT NULL,
+   (	"ROOMNO" VARCHAR2(50) NOT NULL,
 	"LIBID" NUMBER(2,0) NOT NULL, 
-	"ROOMNAME" VARCHAR2(50) NOT NULL, 
+        "POSITION_FLOOR" VARCHAR2(50) NOT NULL,
+        "CAPACITY" NUMBER(2,0) NOT NULL,
 	"ROOMTYPE" VARCHAR2(20) NOT NULL, 
 	 CONSTRAINT "ROOMS_PK" PRIMARY KEY ("ROOMID", "LIBID"),
 	 CONSTRAINT "CHK_ROOMTYPE" CHECK (ROOMTYPE IN ('Study','Conference'))
-   );
-ALTER TABLE  "ROOMS" ADD CONSTRAINT "ROOMS_FK" FOREIGN KEY ("LIBID")
+         CONSTRAINT "ROOMS_FK" FOREIGN KEY ("LIBID")
 	  REFERENCES  "LIBRARY" ("LIBID")
+   );
 
 CREATE TABLE "COURSES"
 (
 	"COURSEID" VARCHAR2(10) PRIMARY KEY,
-	"COURSENAME" VARCHAR2(50)
+	"COURSENAME" VARCHAR2(50),
+        "STUDENT_ENROLLED" VARCHAR2(50),
+        "FACULTY_NAME" VARCHAR2(50),
+        CONSTRAINT "COURSES_STUDENT_FK" FOREIGN KEY ("STUDENTS_ENROLLED")
+	  REFERENCES  "STUDENTS" ("NAME")
+        CONSTRAINT "COURSES_FACULTY_FK" FOREIGN KEY ("FACULTY_NAME")
+	  REFERENCES  "FACULTY" ("NAME")
 );
-ALTER TABLE  "FACULTY" ADD CONSTRAINT "FACULTY_FK" FOREIGN KEY ("COURSE_TAUGHT")
-	  REFERENCES  "COURSES" ("COURSEID");
 
 
 CREATE TABLE  "BOOKS" 
-   (	"BOOKID" NUMBER(10,0) NOT NULL,
-	"ISBN" VARCHAR2(10) NOT NULL, 
+   (    "ISBN" VARCHAR2(10) NOT NULL, 
 	"TITLE" VARCHAR2(50) NOT NULL, 
 	"EDITION" VARCHAR2(50) NOT NULL, 
 	"AUTHOR" VARCHAR2(50) NOT NULL, 
@@ -83,19 +89,122 @@ CREATE TABLE  "BOOKS"
 	"YEAR_OF_PUBLICATION" VARCHAR2(50), 
 	"COURSEID" VARCHAR2(10), 
 	"BOOKTYPE" VARCHAR2(10),
-	"STATUS" VARCHAR2(50),
-	 CONSTRAINT "BOOKS_PK" PRIMARY KEY ("BOOKID"),
-	 CONSTRAINT "CHK_BOOKTYPE" CHECK (BOOKTYPE IN ('Hard','Ebook')),
-	 CONSTRAINT "CHK_STATUS" CHECK (STATUS IN ('Available','Checked Out'))
+        "RESERVED" VARCHAR2(10),
+        "NUMBER_OF_COPIES" NUMBER(10,0) NOT NULL,
+	 CONSTRAINT "BOOKS_PK" PRIMARY KEY ("ISBN"),
    );
 
-insert into BOOKS values('ISBN100','Algos','2nd','Cormen','ABC',2014,'CSC505','Physical','Reserved',2);
-insert into BOOKS values('ISBN100','Algos','2nd','Cormen','ABC',2014,'CSC505','Physical','Reserved',2);
+CREATE TABLE  "JOURNALS" 
+   (	"JOURNALID" VARCHAR2(10) NOT NULL,
+	"ISSN" VARCHAR2(10) NOT NULL, 
+	"TITLE" VARCHAR2(50) NOT NULL, 
+	"AUTHOR" VARCHAR2(50) NOT NULL, 
+	"YEAR_OF_PUBLICATION" VARCHAR2(50),
+	 CONSTRAINT "JOURNALS_PK" PRIMARY KEY ("JOURNALID")
+   );
+
+CREATE TABLE  "CONFERENCE_PAPERS" 
+   (    "CONFERENCEID" VARCHAR2(10) NOT NULL,	
+        "CONF_NO" NUMBER(10,0) NOT NULL,
+        "YEAR_OF_PUBLICATION" VARCHAR2(50),
+	"NAME" VARCHAR2(10) NOT NULL, 
+	"AUTHOR" VARCHAR2(50) NOT NULL,
+        "TITLE" VARCHAR2(50) NOT NULL,
+	 CONSTRAINT "CONFERENCE_PK" PRIMARY KEY ("JOURNALID")
+   );
+
+CREATE TABLE  "CAMERA" 
+   (    "CAMERAID" VARCHAR2(10) NOT NULL,	
+        "MAKE" VARCHAR2(10) NOT NULL,
+        "MODEL" VARCHAR2(50),
+	"CONFIG_LENS" VARCHAR2(10) NOT NULL, 
+	"MEMORY_AVAILABLE" VARCHAR2(50) NOT NULL,
+        "LIBRARY_NAME" VARCHAR2(50) NOT NULL,
+	 CONSTRAINT "CAMERA_PK" PRIMARY KEY ("CAMERAID")
+   );
+
+insert into BOOKS values(11,'ISBN100','Algos','2nd','Cormen','ABC',2014,'CSC505','Hard','Available');
+insert into BOOKS values(12,'ISBN101','DBMS','3rd','Navathe','DEF',2012,'CSC540','Hard','Available');
 
 create table s_books_history(
-studentno varchar2(30) references students(studentno),
-bookid number(10) references books(bookid),
+studentno varchar2(30) references students(STUDENTNO),
+isbn varchar2(30) references books(isbn),
 checkoutdate date,
-returndate date,
+duedate date,
 actualreturndate date
 )
+
+create table f_books_history(
+facultyno varchar2(30) references faculty(FACULTYNO),
+isbn varchar2(30) references books(isbn),
+checkoutdate date,
+duedate date,
+actualreturndate date
+)
+
+create table s_room_history(
+studentno varchar2(30) references students(STUDENTNO),
+roomnumber varchar2(30) references rooms(ROOMNO),
+roomcapacity varchar2(30) references rooms(capacity),
+checkouttime date,
+checkintime date,
+actualcheckouttime date,
+)
+
+create table f_room_history(
+facultyno varchar2(30) references faculty(FACULTYNO),
+roomnumber varchar2(30) references rooms(ROOMNO),
+roomcapacity varchar2(30) references rooms(capacity),
+checkouttime date,
+checkintime date,
+actualcheckouttime date,
+)
+
+create table s_camera_history(
+studentno varchar2(30) references students(STUDENTNO),
+camera_name varchar2(30) references camera(CAMERAID),
+checkoutdate date,
+duedate date,
+actualreturndate date
+)
+
+create table f_camera_history(
+facultyno varchar2(30) references faculty(FACULTYNO),
+camera_name varchar2(30) references camera(CAMERAID),
+checkoutdate date,
+duedate date,
+actualreturndate date
+)
+
+create table s_journals_history(
+journalid varchar2(30) references journals(journalid),
+studentno varchar2(30) references students(studentsno),
+checkoutdate date,
+duedate date,
+actualreturndate date
+)
+
+create table f_journals_history(
+journalid varchar2(30) references journals(journalid),
+facultyno varchar2(30) references faculty(facultyno),
+checkoutdate date,
+duedate date,
+actualreturndate date
+)
+
+create table s_CONFERENCE_PAPERS_history(
+studentno varchar2(30) references students(STUDENTNO),
+CONFERENCEID varchar2(30) references CONFERENCE_PAPERS(CONFERENCEID),
+checkoutdate date,
+duedate date,
+actualreturndate date
+)
+
+create table f_CONFERENCE_PAPERS_history(
+facultyno varchar2(30) references faculty(FACULTYNO),
+CONFERENCEID varchar2(30) references CONFERENCE_PAPERS(CONFERENCEID),
+checkoutdate date,
+duedate date,
+actualreturndate date
+)
+
