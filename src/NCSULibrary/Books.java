@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import javax.swing.JOptionPane;
 //import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
@@ -373,13 +374,13 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
             PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies + 1 where ISBN=?");
             stmt1.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
             stmt1.executeUpdate();
+            Date date=new Date();
             
-            PreparedStatement stmt2 = GlobalData.connection.prepareStatement("update students set dues=dues + 2*(CEIL(sysdate-to_date(?))) where ISBN=? and studentno=(select studentno from students where studentno=?)");
-            stmt2.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
-            stmt2.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),4).toString() );
-            stmt2.setString(3,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
-            stmt2.executeUpdate();
-
+            //PreparedStatement stmt2 = GlobalData.connection.prepareStatement("update students set dues=dues + 2*(CEIL(sysdate-to_date(?))) where studentno=(select studentno from students where studentno=?)");
+            //stmt2.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),4).toString() );
+            //stmt2.setString(2,GlobalData.loginSession);
+            //stmt2.executeUpdate();
+            
             // Close the Statement
             stmt.close();
             stmt1.close();

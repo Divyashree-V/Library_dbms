@@ -1,0 +1,18 @@
+create or replace trigger trig_s_books_dues
+after update of actualreturndate on s_books_history
+for each row
+BEGIN
+If to_date(:new.actualreturndate,'DD-MON-YYYY')=to_date(sysdate,'DD-MON-YYYY') then
+update students set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where studentno=:OLD.studentno;
+End if;
+END;
+
+
+create or replace trigger trig_f_books_dues
+after update of actualreturndate on f_books_history
+for each row
+BEGIN
+If to_date(:new.actualreturndate,'DD-MON-YYYY')=to_date(sysdate,'DD-MON-YYYY') then
+update students set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where studentno=:OLD.studentno;
+End if;
+END;
