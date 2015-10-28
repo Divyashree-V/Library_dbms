@@ -146,7 +146,6 @@ public class Login extends javax.swing.JFrame {
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
 
         String sql;
-        
         if(jRadioButtonFaculty.isSelected()){
             sql = "SELECT FACULTYNO FROM sgulati2.FACULTY WHERE FACULTYNO = '"+jTextNumber.getText()+"' AND "
                 + "PASSWORD = '" +jPasswordField.getText()+ "'";
