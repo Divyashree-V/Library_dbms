@@ -303,7 +303,7 @@ public class Books extends javax.swing.JFrame {
                    stmt.setTimestamp(3,java.sql.Timestamp.valueOf(jTextStartDate.getText()));
                    stmt.setTimestamp(4,java.sql.Timestamp.valueOf(jTextEndDate.getText()));
                    stmt.executeUpdate();
-            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set status='Checked Out' where bookid=?");
+            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies - 1 where isbn=?");
             stmt1.setString(1,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),0).toString() );
             stmt1.executeUpdate();      
 
@@ -324,11 +324,11 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
         // TODO add your handling code here:
         try {
             //Statement stmt = connection.createStatement();
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT BOOKID,ISBN,TITLE,EDITION,AUTHOR,PUBLISHER,BOOKTYPE,STATUS from books where status='Available'");
+            PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT ISBN,TITLE,EDITION,AUTHOR,PUBLISHER,YEAR_OF_PUBLICATION,COURSEID,BOOKTYPE,RESERVED,NUMBER_OF_COPIES from books where NUMBER_OF_COPIES>0");
             ResultSet rs = stmt.executeQuery();
             jTableBooksCheckout.setModel(DbUtils.resultSetToTableModel(rs));
             
-            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("SELECT s.BOOKID,b.ISBN, b.TITLE,s.CHECKOUTDATE, s.RETURNDATE from s_books_history s,books b where s.bookid = b.bookid and actualreturndate is NULL and studentno= ?");
+            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("SELECT s.STUDENTNO,b.ISBN, b.TITLE,s.CHECKOUTDATE, s.DUEDATE from s_books_history s,books b where s.ISBN = b.ISBN and s.actualreturndate is NULL and s.studentno= ?");
             stmt1.setString(1,GlobalData.loginSession);
             ResultSet rs1 = stmt1.executeQuery();
             jTableBooksReturn.setModel(DbUtils.resultSetToTableModel(rs1));
@@ -339,11 +339,11 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
             jTableBooksRequest.setModel(DbUtils.resultSetToTableModel(rs2));
 
             // Close the RseultSet
-            rs.close();
+            //rs.close();
 
             // Close the Statement
-            stmt.close();
-               stmt1.close();
+            //stmt.close();
+               //stmt1.close();
             // Close the connection
         } catch (SQLException e) {
 
@@ -364,13 +364,13 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
         // TODO add your handling code here:
         try {
 
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where bookid=? and studentno=?");
+            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where isbn=? and studentno=?");
         
                    stmt.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
                    stmt.setString(2,GlobalData.loginSession);
                    stmt.executeUpdate();
                    
-            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set status='Available' where bookid=?");
+            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies + 1 where ISBN=?");
             stmt1.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
             stmt1.executeUpdate();
       
@@ -392,7 +392,7 @@ JOptionPane.showMessageDialog(null, "Your book has been returned", "Success", JO
     private void jButtonRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRenewActionPerformed
         // TODO add your handling code here:
         try {       
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where bookid=? and studentno=?");
+            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where ISBN=? and studentno=?");
                    stmt.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),0).toString() );
                    stmt.setString(2,GlobalData.loginSession);
                    stmt.executeUpdate();
