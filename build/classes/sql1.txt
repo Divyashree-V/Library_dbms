@@ -32,6 +32,22 @@ insert into students values(
 'Graduate'
 0
 )
+insert into students values(
+2,'aa',
+'sgulati@ncsu.edu',
+'123',
+999999,
+444444,
+'Rhynes 27606',
+'13-FEB-1991',
+'M',
+'Indian',
+'dept a',
+'degree a',
+'First Year',
+'Graduate',
+0
+)
 CREATE TABLE  "FACULTY" 
    (	"FACULTYNO" VARCHAR2(15) PRIMARY KEY,
 	"NAME" VARCHAR2(50) NOT NULL,  
@@ -94,6 +110,8 @@ CREATE TABLE  "BOOKS"
 	 CONSTRAINT "BOOKS_PK" PRIMARY KEY ("ISBN"),
    );
 
+insert into books values
+('ISBN101','test','test','test','testpub','2013','CSC510','Physical','No',1)
 CREATE TABLE  "JOURNALS" 
    (	"JOURNALID" VARCHAR2(10) NOT NULL,
 	"ISSN" VARCHAR2(10) NOT NULL, 
@@ -215,3 +233,10 @@ transaction_date date,
 latefee number,
 payment number
 }
+
+create table queue_books(
+patron_type varchar2(50),
+patron_id varchar2(50),
+ISBN varchar(50),
+waitlist_no number(4)
+)

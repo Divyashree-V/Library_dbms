@@ -57,6 +57,7 @@ public class Books extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableBooksRequest = new javax.swing.JTable();
         jButtonRequest = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -228,22 +229,34 @@ public class Books extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Request in waitlist");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonRequest)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRequest))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(45, 45, 45))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jButtonRequest)
                 .addContainerGap())
@@ -339,7 +352,7 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
             ResultSet rs1 = stmt1.executeQuery();
             jTableBooksReturn.setModel(DbUtils.resultSetToTableModel(rs1));
             
-            PreparedStatement stmt2 = GlobalData.connection.prepareStatement("SELECT s.BOOKID,b.ISBN, b.TITLE,s.CHECKOUTDATE, s.RETURNDATE from s_books_history s,books b where s.bookid = b.bookid and actualreturndate is NULL and studentno<> ?");
+            PreparedStatement stmt2 = GlobalData.connection.prepareStatement("SELECT ISBN,TITLE,EDITION,AUTHOR,PUBLISHER,YEAR_OF_PUBLICATION,COURSEID,BOOKTYPE,RESERVED,NUMBER_OF_COPIES from books where NUMBER_OF_COPIES=0 and  ISBN NOT IN(select ISBN from s_books_history where actualreturndate is NULL and studentno=?)");
             stmt2.setString(1,GlobalData.loginSession);
             ResultSet rs2 = stmt2.executeQuery();
             jTableBooksRequest.setModel(DbUtils.resultSetToTableModel(rs2));
@@ -427,7 +440,24 @@ JOptionPane.showMessageDialog(null, "Your book has been returned", "Success", JO
 
     private void jButtonRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRequestActionPerformed
         // TODO add your handling code here:
-        
+        try { 
+            
+            CallableStatement stmt = GlobalData.connection.prepareCall("{call proc_queue_books('S',?,?)}");
+                   stmt.setString(1,GlobalData.loginSession);
+                   stmt.setString(2,jTableBooksCheckout.getValueAt(jTableBooksRequest.getSelectedRow(),0).toString() );
+                   stmt.executeUpdate();
+
+            stmt.close();
+JOptionPane.showMessageDialog(null, "You have been put on waitlist for this queue.", "Success", JOptionPane.PLAIN_MESSAGE);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
+            
+            e.printStackTrace();
+            return;
+
+      //  }
+    }     
     }//GEN-LAST:event_jButtonRequestActionPerformed
 
     /**
@@ -475,6 +505,7 @@ JOptionPane.showMessageDialog(null, "Your book has been returned", "Success", JO
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
