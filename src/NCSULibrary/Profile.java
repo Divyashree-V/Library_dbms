@@ -327,39 +327,12 @@ public class Profile extends javax.swing.JFrame {
                    JOptionPane.showMessageDialog(null, "The details have been updated", "Success", JOptionPane.PLAIN_MESSAGE);
 
                    stmt.executeUpdate();
-		   // ResultSet rs = stmt.executeQuery("SELECT * from students where fname='?'"+jTextField1.getText());
-
-                        /*    jTextSno.setText(rs.getString("studentno"));
-                            jTextFirstName.setText(rs.getString("fname"));
-                            jTextLastName.setText(rs.getString("lname"));
-                            jTextEmail.setText(rs.getString("email"));
-                            jTextPassword.setText(rs.getString("password"));
-                            jTextPhone.setText(rs.getString("phone"));
-                            jTextAltPhone.setText(rs.getString("altphone"));
-                            jTextAddress.setText(rs.getString("address"));
-                            jTextDob.setText(rs.getString("dob"));
-                            jTextSex.setText(rs.getString("sex"));
-                            jTextNationality.setText(rs.getString("nationality"));
-                            jTextDepartment.setText(rs.getString("department"));
-                            jTextDegree.setText(rs.getString("degree"));
-                            jTextCategory.setText(rs.getString("category"));
-                            */
-			/*while (rs.next ())
-		    	{
-					System.out.println(rs.getString("libid") + "\n");
-		    	
-
-		    	}*/
-		      // Close the RseultSet
-		     // rs.close();
-
-		      // Close the Statement
 		      stmt.close();
 
 
 		} catch (SQLException e) {
 
-			System.out.println("Connection Failed! Check output console");
+                    JOptionPane.showMessageDialog(null,e.getMessage(), "Oracle Error", JOptionPane.PLAIN_MESSAGE);
 			e.printStackTrace();
 			return;
 

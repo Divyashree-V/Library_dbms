@@ -5,6 +5,7 @@
  */
 package NCSULibrary;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -78,9 +79,9 @@ public class Books extends javax.swing.JFrame {
 
         jLabel1.setText("Books available for checkout");
 
-        jLabel3.setText("Start Date(YYYY-MM-DD)");
+        jLabel3.setText("Start Date(DD-MON-YYYY hh24:mi:ss)");
 
-        jLabel4.setText("End Date(YYYY-MM-DD)");
+        jLabel4.setText("End Date(DD-MON-YYYY hh24:mi:ss)");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,7 +94,7 @@ public class Books extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
-                        .addContainerGap(44, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,7 +233,7 @@ public class Books extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonRequest)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -297,12 +298,16 @@ public class Books extends javax.swing.JFrame {
         //}else
     //    {
         try { 
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("insert into s_books_history values(?,?,?,?,NULL)");
-
+            //PreparedStatement stmt = GlobalData.connection.prepareStatement("insert into s_books_history values(?,?,?,?,NULL)");
+            CallableStatement stmt = GlobalData.connection.prepareCall("{call checkout_books(?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'),to_date(?,'DD-MON-YYYY hh24:mi:ss'),?,?)}");
                    stmt.setString(1,GlobalData.loginSession);
                    stmt.setString(2,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),0).toString() );
-                   stmt.setTimestamp(3,java.sql.Timestamp.valueOf(jTextStartDate.getText()));
-                   stmt.setTimestamp(4,java.sql.Timestamp.valueOf(jTextEndDate.getText()));
+                   //stmt.setTimestamp(3,java.sql.Timestamp.valueOf(jTextStartDate.getText()));
+                   //stmt.setTimestamp(4,java.sql.Timestamp.valueOf(jTextEndDate.getText()));
+                   stmt.setString(3,jTextStartDate.getText());
+                   stmt.setString(4,jTextEndDate.getText());
+                   stmt.setString(5,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),8).toString() );
+                   stmt.setString(6,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),7).toString() );
                    stmt.executeUpdate();
             PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies - 1 where isbn=?");
             stmt1.setString(1,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),0).toString() );
@@ -313,7 +318,7 @@ public class Books extends javax.swing.JFrame {
 JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success", JOptionPane.PLAIN_MESSAGE);
 
         } catch (SQLException e) {
-
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
             return;

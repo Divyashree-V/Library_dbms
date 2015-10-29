@@ -1,0 +1,74 @@
+create or replace trigger trig_s_books_dues
+after update of actualreturndate on s_books_history
+for each row
+BEGIN
+If to_date(:new.actualreturndate,'DD-MON-YYYY')=to_date(sysdate,'DD-MON-YYYY') then
+update students set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where studentno=:OLD.studentno;
+insert_dues('S',:OLD.studentno,sysdate,2*(FLOOR(:new.actualreturndate-:old.duedate)));
+End if;
+END;
+
+create or replace trigger trig_f_books_dues
+after update of actualreturndate on f_books_history
+for each row
+BEGIN
+If to_date(:new.actualreturndate,'DD-MON-YYYY')=to_date(sysdate,'DD-MON-YYYY') then
+update students set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where studentno=:OLD.studentno;
+End if;
+END;
+
+create or replace procedure insert_dues(
+patron IN varchar2,
+id IN varchar2,
+trans_date date,
+amount number
+)
+IS
+BEGIN
+insert into dues values(patron,id,trans_date,amount);
+END;
+
+
+create or replace procedure checkout_books(
+v_studentno varchar2,
+v_isbn varchar2,
+v_checkoutdate date,
+v_duedate date,
+v_reserved varchar2,
+v_booktype varchar2
+)
+IS
+hoursdiff number;
+ex_fourhours EXCEPTION;
+ex_twoweeks EXCEPTION;
+BEGIN
+    hoursdiff:=(v_duedate - v_checkoutdate)*24;
+        dbms_output.put_line(hoursdiff);
+If v_booktype='Electronic' then
+    insert into s_books_history values(v_studentno,v_isbn,v_checkoutdate,NULL,NULL);
+else
+    If v_reserved='Yes' then       
+        If hoursdiff <= 4 then
+            dbms_output.put_line(((to_date(v_duedate,'dd-mon-yyyy hh24:mi:ss') - to_date(v_checkoutdate,'dd-mon-yyyy hh24:mi:ss'))*24));
+insert into s_books_history values(v_studentno,v_isbn,v_checkoutdate,v_duedate,NULL);
+        else
+            RAISE ex_fourhours;
+        End if;
+    else
+        If ceil(v_duedate - v_checkoutdate)<=14 then
+            insert into s_books_history values(v_studentno,v_isbn,v_checkoutdate,v_duedate,NULL);
+        else
+            RAISE ex_twoweeks;
+        End if;
+    End if;
+End if; 
+EXCEPTION
+When ex_twoweeks then
+raise_application_error (-20001,'You cant checkout for more than two weeks');
+When ex_fourhours then
+raise_application_error (-20001,'You cant checkout a RESERVED for more than four hours');
+END;
+
+ execute checkout_books('1','ISBN100',to_date('10-OCT-2015 10:00:00','DD-MON-YYYY hh24:mi:ss'),to_date('10-OCT-2015 13:00:00','DD-MON-YYYY hh24:mi:ss'),'Yes','E');
+
+select (to_date('10-OCT-2015 15:00:00','DD-MON-YYYY hh24:mi:ss') - to_date('10-OCT-2015 10:00:00','DD-MON-YYYY hh24:mi:ss'))*24 from dual;

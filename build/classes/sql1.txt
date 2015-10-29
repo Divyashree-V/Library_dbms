@@ -208,3 +208,10 @@ duedate date,
 actualreturndate date
 )
 
+create table dues{
+patron_type varchar2(50),
+patron_id varchar2(100),
+transaction_date date,
+latefee number,
+payment number
+}
