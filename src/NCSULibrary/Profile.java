@@ -47,21 +47,21 @@ public class Profile extends javax.swing.JFrame {
         jButtonShow = new javax.swing.JButton();
         jTextSno = new javax.swing.JTextField();
         jTextName = new javax.swing.JTextField();
-        jTextClassification = new javax.swing.JTextField();
         jTextEmail = new javax.swing.JTextField();
         jTextPassword = new javax.swing.JTextField();
         jTextPhone = new javax.swing.JTextField();
         jTextAltPhone = new javax.swing.JTextField();
         jTextAddress = new javax.swing.JTextField();
         jTextDob = new javax.swing.JTextField();
-        jTextSex = new javax.swing.JTextField();
         jTextNationality = new javax.swing.JTextField();
         jTextDepartment = new javax.swing.JTextField();
-        jTextDegree = new javax.swing.JTextField();
         jTextCategory = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         jButtonSave = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
+        jComboDegree = new javax.swing.JComboBox();
+        jComboClassification = new javax.swing.JComboBox();
+        jComboSex = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -132,6 +132,12 @@ public class Profile extends javax.swing.JFrame {
             }
         });
 
+        jComboDegree.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "BS", "MS", "MA", "PhD" }));
+
+        jComboClassification.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Undergraduate", "Postgraduate" }));
+
+        jComboSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "F" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,14 +147,6 @@ public class Profile extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(258, 258, 258)
-                                .addComponent(jTextDegree, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -184,16 +182,24 @@ public class Profile extends javax.swing.JFrame {
                                             .addGap(276, 276, 276)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel9)
-                                        .addGap(276, 276, 276)))
+                                        .addGap(276, 276, 276))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addGap(258, 258, 258)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboDegree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextDob, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextNationality, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextSex, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                    .addComponent(jTextDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextClassification, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(102, 102, 102)
@@ -253,8 +259,8 @@ public class Profile extends javax.swing.JFrame {
                             .addComponent(jTextDob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel10)
+                            .addComponent(jComboSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -266,21 +272,18 @@ public class Profile extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel12)
                             .addComponent(jTextDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(jLabel13))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextDegree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(jComboDegree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel14))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextClassification, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(317, 317, 317)
                         .addComponent(jButtonBack)
@@ -288,7 +291,7 @@ public class Profile extends javax.swing.JFrame {
                         .addComponent(jButtonShow)
                         .addGap(43, 43, 43)
                         .addComponent(jButtonSave)))
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addContainerGap(380, Short.MAX_VALUE))
         );
 
         pack();
@@ -308,28 +311,24 @@ public class Profile extends javax.swing.JFrame {
 		try {
 
 			//Statement stmt = connection.createStatement();
-                        PreparedStatement stmt = GlobalData.connection.prepareStatement("update students set name=?,classification=?,password=?,phone=?,altphone=?,address=?,sex=?,nationality=?,department=?,degree=?,category=? where studentno=?");
-
+               //         PreparedStatement stmt = GlobalData.connection.prepareStatement("update students set name=?,classification=?,password=?,phone=?,altphone=?,address=?,sex=?,nationality=?,department=?,degree=?,category=? where studentno=?");
+                       CallableStatement stmt = GlobalData.connection.prepareCall("{call proc_stud_update_profile(?,?,?,?,?,to_date(?,'DD-MON-YYYY'),?,?,?,?,?,?,?)}");
                    stmt.setString(1,jTextName.getText().toString());
-                   stmt.setString(2,jTextClassification.getText().toString());
-                   stmt.setString(3,jTextPassword.getText().toString());
-                   stmt.setString(4,jTextPhone.getText().toString());
-                  stmt.setString(5,jTextAltPhone.getText().toString());
-                   stmt.setString(6,jTextAddress.getText().toString());
-                   //stmt.setString(7,java.sql.Date.valueOf(jTextDob));
-                  stmt.setString(7,jTextSex.getText().toString());
+                   stmt.setString(2,jTextPassword.getText().toString());
+                   stmt.setString(3,jTextPhone.getText().toString());
+                  stmt.setString(4,jTextAltPhone.getText().toString());
+                   stmt.setString(5,jTextAddress.getText().toString());
+                   stmt.setString(6,jTextDob.getText());
+                  stmt.setString(7,jComboSex.getSelectedItem().toString());
                    stmt.setString(8,jTextNationality.getText().toString());
                    stmt.setString(9,jTextDepartment.getText().toString());
-                   stmt.setString(10,jTextDegree.getText().toString());
+                   stmt.setString(10,jComboDegree.getSelectedItem().toString());
                    stmt.setString(11,jTextCategory.getText().toString());
-                   stmt.setString(12,GlobalData.loginSession);
-                   //JOptionPane1.showMessageDialog(null, "saved");
-                   JOptionPane.showMessageDialog(null, "The details have been updated", "Success", JOptionPane.PLAIN_MESSAGE);
-
+                   stmt.setString(12,jComboClassification.getSelectedItem().toString());
+                   stmt.setString(13,GlobalData.loginSession);
                    stmt.executeUpdate();
+                   JOptionPane.showMessageDialog(null, "The details have been updated", "Success", JOptionPane.PLAIN_MESSAGE);
 		      stmt.close();
-
-
 		} catch (SQLException e) {
 
                     JOptionPane.showMessageDialog(null,e.getMessage(), "Oracle Error", JOptionPane.PLAIN_MESSAGE);
@@ -349,24 +348,24 @@ public class Profile extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
 		try {
-                        PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT * from students where studentno=?");   
+                        PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT studentno,name,classification,email,password,phone,altphone,address,sex,to_char(dob,'DD-MON-YYYY'),nationality,department,degree,category from students where studentno=?");   
                    stmt.setString(1,GlobalData.loginSession);
 		   // ResultSet rs = stmt.executeQuery("SELECT * from students where fname='?'"+jTextField1.getText());
                     ResultSet rs = stmt.executeQuery(); 
                    rs.next();
                             jTextSno.setText(rs.getString("studentno"));
                             jTextName.setText(rs.getString("name"));
-                            jTextClassification.setText(rs.getString("classification"));
                             jTextEmail.setText(rs.getString("email"));
                             jTextPassword.setText(rs.getString("password"));
                             jTextPhone.setText(rs.getString("phone"));
                             jTextAltPhone.setText(rs.getString("altphone"));
                             jTextAddress.setText(rs.getString("address"));
-                            jTextDob.setText(rs.getString("dob"));
-                            jTextSex.setText(rs.getString("sex"));
+                            jTextDob.setText(rs.getString("to_char(dob,'DD-MON-YYYY')"));
+                            jComboSex.setSelectedItem(rs.getString("sex"));
                             jTextNationality.setText(rs.getString("nationality"));
                             jTextDepartment.setText(rs.getString("department"));
-                            jTextDegree.setText(rs.getString("degree"));
+                            jComboDegree.setSelectedItem(rs.getString("degree"));
+                            jComboClassification.setSelectedItem(rs.getString("classification"));
                             jTextCategory.setText(rs.getString("category"));
                             
 			/*while (rs.next ())
@@ -395,53 +394,8 @@ public class Profile extends javax.swing.JFrame {
     private void jButtonShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShowActionPerformed
         // TODO add your handling code here:
         //CreateConnection connection = new CreateConnection();
-        System.out.println("-------- Oracle JDBC Connection Testing ------");
 
         
-
-
-        try {
-
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT * from students where studentno=?");
-            stmt.setString(1,jTextField1.getText());
-            // ResultSet rs = stmt.executeQuery("SELECT * from students where fname='?'"+jTextField1.getText());
-            ResultSet rs = stmt.executeQuery();
-            rs.next();
-            jTextSno.setText(rs.getString("studentno"));
-            jTextName.setText(rs.getString("name"));
-            jTextClassification.setText(rs.getString("classification"));
-            jTextEmail.setText(rs.getString("email"));
-            jTextPassword.setText(rs.getString("password"));
-            jTextPhone.setText(rs.getString("phone"));
-            jTextAltPhone.setText(rs.getString("altphone"));
-            jTextAddress.setText(rs.getString("address"));
-            jTextDob.setText(rs.getString("dob"));
-            jTextSex.setText(rs.getString("sex"));
-            jTextNationality.setText(rs.getString("nationality"));
-            jTextDepartment.setText(rs.getString("department"));
-            jTextDegree.setText(rs.getString("degree"));
-            jTextCategory.setText(rs.getString("category"));
-
-            /*while (rs.next ())
-            {
-                System.out.println(rs.getString("libid") + "\n");
-
-            }*/
-            // Close the RseultSet
-            rs.close();
-
-            // Close the Statement
-            stmt.close();
-
-
-        } catch (SQLException e) {
-
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return;
-
-        }
-
     }//GEN-LAST:event_jButtonShowActionPerformed
 
     /**
@@ -485,6 +439,9 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jButtonShow;
+    private javax.swing.JComboBox jComboClassification;
+    private javax.swing.JComboBox jComboDegree;
+    private javax.swing.JComboBox jComboSex;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -502,8 +459,6 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JTextField jTextAddress;
     private javax.swing.JTextField jTextAltPhone;
     private javax.swing.JTextField jTextCategory;
-    private javax.swing.JTextField jTextClassification;
-    private javax.swing.JTextField jTextDegree;
     private javax.swing.JTextField jTextDepartment;
     private javax.swing.JTextField jTextDob;
     private javax.swing.JTextField jTextEmail;
@@ -512,7 +467,6 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JTextField jTextNationality;
     private javax.swing.JTextField jTextPassword;
     private javax.swing.JTextField jTextPhone;
-    private javax.swing.JTextField jTextSex;
     private javax.swing.JTextField jTextSno;
     // End of variables declaration//GEN-END:variables
 }
