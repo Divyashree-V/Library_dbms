@@ -2,15 +2,22 @@ create or replace trigger trig_s_books_dues
 after update of actualreturndate on s_books_history
 for each row
 DECLARE
-v_count number;
+v_count_f number;
+v_count_s number;
 BEGIN
 If to_date(:new.actualreturndate,'DD-MON-YYYY')=to_date(sysdate,'DD-MON-YYYY') then
 update students set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where studentno=:OLD.studentno;
 insert_dues('S',:OLD.studentno,sysdate,2*(FLOOR(:new.actualreturndate-:old.duedate)));
-select count(*) into v_count from queue_books where ISBN=:OLD.isbn;
-if v_count>0 then
-    delete from queue_books where isbn=:OLD.isbn and waitlist_no=(
+select count(*) into v_count_f from queue_books where ISBN=:OLD.isbn and patron_type='F';
+select count(*) into v_count_s from queue_books where ISBN=:OLD.isbn and patron_type='S';
+if v_count_f>0 then
+    delete from queue_books where patron_type='F' and isbn=:OLD.isbn and waitlist_no=(
+    select min(waitlist_no) from queue_books where isbn=:OLD.isbn) ;
+    update queue_books set waitlist_no=waitlist_no-1 where isbn=:OLD.isbn and patron_type='F';
+elsif v_count_s>0 then
+    delete from queue_books where patron_type='S' and isbn=:OLD.isbn and waitlist_no=(
     select min(waitlist_no) from queue_books where isbn=:OLD.isbn);
+    update queue_books set waitlist_no=waitlist_no-1 where isbn=:OLD.isbn and patron_type='S';
 End if;
 End if;
 END;
@@ -18,9 +25,18 @@ END;
 create or replace trigger trig_f_books_dues
 after update of actualreturndate on f_books_history
 for each row
+DECLARE
+v_count number;
 BEGIN
 If to_date(:new.actualreturndate,'DD-MON-YYYY')=to_date(sysdate,'DD-MON-YYYY') then
-update students set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where studentno=:OLD.studentno;
+update students set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where facultyno=:OLD.facultyno;
+insert_dues('F',:OLD.facultyno,sysdate,2*(FLOOR(:new.actualreturndate-:old.duedate)));
+select count(*) into v_count from queue_books where ISBN=:OLD.isbn;
+if v_count>0 then
+    delete from queue_books where isbn=:OLD.isbn and waitlist_no=(
+    select min(waitlist_no) from queue_books where isbn=:OLD.isbn);
+    update queue_books set waitlist_no=waitlist_no-1 where isbn=:OLD.isbn;
+End if;
 End if;
 END;
 
@@ -36,7 +52,7 @@ insert into dues values(patron,id,trans_date,amount);
 END;
 
 
-create or replace procedure checkout_books(
+create or replace procedure proc_stud_checkout_books(
 v_studentno varchar2,
 v_isbn varchar2,
 v_checkoutdate date,
@@ -76,6 +92,40 @@ When ex_fourhours then
 raise_application_error (-20001,'You cant checkout a RESERVED for more than four hours');
 END;
 
+create or replace procedure proc_stud_return_books(
+v_studentno varchar2,
+v_isbn varchar2
+)
+IS
+
+BEGIN
+update s_books_history 
+set actualreturndate=sysdate 
+where studentno=v_studentno and 
+isbn=v_isbn and 
+actualreturndate is NULL;
+update books 
+set number_of_copies=number_of_copies + 1 
+where ISBN=v_ISBN;
+END;
+
+create or replace procedure proc_stud_renew_books(
+v_studentno varchar2,
+v_isbn varchar2
+)
+IS
+BEGIN
+update s_books_history 
+set actualreturndate=sysdate 
+where studentno=v_studentno and 
+isbn=v_isbn and 
+actualreturndate is NULL;
+select v_
+proc_stud_checkout_books(v_studentno,v_isbn,sysdate,v_duedate ,v_reserved ,v_booktype);
+END;
+
+
+
 //Procedure for bookswaitlist
 create or replace procedure proc_queue_books(
 v_patron_type varchar2,
@@ -85,10 +135,101 @@ v_isbn varchar2
 IS
 v_max number;
 BEGIN
+if (v_patron_type='S') then
 select max(waitlist_no) into v_max from queue_books where isbn=v_isbn;
 if v_max>0 then
 insert into queue_books values(v_patron_type,v_patron_id,v_isbn,v_max+1);
 else
 insert into queue_books values(v_patron_type,v_patron_id,v_isbn,1);
 end if;
+elsif (v_patron_type='F') then
+select max(waitlist_no) into v_max from queue_books where isbn=v_isbn;
+if v_max>0 then
+
+insert into queue_books values(v_patron_type,v_patron_id,v_isbn,v_max+1);
+else
+insert into queue_books values(v_patron_type,v_patron_id,v_isbn,1);
+end if;
+
+End If;
 END; 
+
+
+//procedure to update STUDENT PROFILE
+create or replace procedure proc_stud_update_profile(
+v_name varchar2,
+v_password varchar2,
+v_phone number,
+v_altphone number,
+v_address varchar2,
+v_dob date,
+v_sex varchar2,
+v_nationality varchar2,
+v_department varchar2,
+v_degree varchar2,
+v_category varchar2,
+v_classification varchar2,
+v_studentno varchar2
+)
+IS
+ex_degree EXCEPTION;
+ex_date EXCEPTION;
+BEGIN
+If ((v_classification='Undergraduate' and (v_degree='MS' or v_degree='MA' or v_degree='PhD')) 
+OR (v_classification='Postgraduate' and v_degree='BS')) 
+then
+raise ex_degree;
+End if;
+update students
+set
+name=v_name,
+password=v_password ,
+phone=v_phone ,
+altphone=v_altphone,
+address=v_address ,
+dob=v_dob,
+sex=v_sex ,
+nationality=v_nationality ,
+department=v_department ,
+degree=v_degree ,
+category=v_category ,
+classification=v_classification 
+where studentno=v_studentno;
+EXCEPTION
+WHEN ex_date THEN
+raise_application_error (-20001,'Check your age.');
+WHEN ex_degree THEN
+raise_application_error (-20001,'Select the correct combination of degree and classification.');
+END;
+
+create or replace procedure issue_camera(
+v_studentno varchar2,
+v_CAMERAID varchar2,
+v_checkoutdate date
+)
+IS
+BEGIN
+insert into s_camera_history values(v_studentno,v_CAMERAID,v_checkoutdate,NULL,NULL,'H');
+dbms_output.put_line('test');
+END;
+
+create or replace procedure checkout_camera(
+v_studentno varchar2,
+v_CAMERAID varchar2,
+v_checkoutdate date
+)
+IS
+due_date date;
+BEGIN
+due_date:=v_checkoutdate+6;    
+update s_camera_history set status='C',duedate=due_date where studentno=v_studentno and camera_name=v_CAMERAID;
+END;
+
+create or replace procedure return_camera(
+v_studentno varchar2,
+v_CAMERAID varchar2
+)
+IS
+BEGIN    
+update s_camera_history set actualreturndate=sysdate, status='A' where studentno=v_studentno and camera_name=v_CAMERAID;
+END;
