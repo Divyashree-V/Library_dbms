@@ -5,6 +5,15 @@
  */
 package NCSULibrary;
 
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
+
 /**
  *
  * @author shiva
@@ -28,52 +37,228 @@ public class Rooms extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBoxLibrary = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBoxLibraryName = new javax.swing.JComboBox();
         jComboBoxOccupants = new javax.swing.JComboBox();
+        jTextFieldCheckoutTime = new javax.swing.JTextField();
+        jTextFieldCheckinTime = new javax.swing.JTextField();
+        jComboBoxRoomtype = new javax.swing.JComboBox();
         jButtonSearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableRooms = new javax.swing.JTable();
+        jButtonBookRoom = new javax.swing.JButton();
+        jButtonBack = new javax.swing.JButton();
+        jButtonCheckoutRoom = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableBookedRooms = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableBookedRoomsFac = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jLabel1.setText("Number of Occupants");
+        jLabel3.setText("Library");
 
-        jLabel2.setText("Library");
+        jLabel4.setText("No. of occupants");
 
-        jComboBoxLibrary.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "JB Hunt", "DH Hil" }));
+        jLabel5.setText("Checkin time");
+
+        jLabel6.setText("Checkout time");
+
+        jLabel7.setText("Room type");
+
+        jComboBoxLibraryName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hunt", "DH Hill" }));
+        jComboBoxLibraryName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxLibraryNameActionPerformed(evt);
+            }
+        });
 
         jComboBoxOccupants.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8" }));
 
+        jTextFieldCheckoutTime.setText("DD-MON-YYYY hh(24):mi:ss");
+        jTextFieldCheckoutTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCheckoutTimeActionPerformed(evt);
+            }
+        });
+
+        jTextFieldCheckinTime.setText("DD-MON-YYYY hh(24):mi:ss");
+        jTextFieldCheckinTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCheckinTimeActionPerformed(evt);
+            }
+        });
+
+        jComboBoxRoomtype.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Study", "Conference" }));
+
         jButtonSearch.setText("Search");
+        jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchActionPerformed(evt);
+            }
+        });
+
+        jTableRooms.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableRooms);
+
+        jButtonBookRoom.setText("Book");
+        jButtonBookRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBookRoomActionPerformed(evt);
+            }
+        });
+
+        jButtonBack.setText("Back");
+        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackActionPerformed(evt);
+            }
+        });
+
+        jButtonCheckoutRoom.setText("Checkout Room");
+        jButtonCheckoutRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCheckoutRoomActionPerformed(evt);
+            }
+        });
+
+        jTableBookedRooms.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableBookedRooms);
+
+        jLabel2.setText("Booked Rooms:");
+
+        jLabel8.setText("Searched Rooms:");
+
+        jTableBookedRoomsFac.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTableBookedRoomsFac);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBoxOccupants, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBoxLibrary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94)
-                .addComponent(jButtonSearch)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(524, 524, 524)
+                        .addComponent(jButtonCheckoutRoom))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(586, 586, 586)
+                        .addComponent(jButtonBookRoom))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonSearch)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel5))
+                                    .addGap(46, 46, 46)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jComboBoxLibraryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jComboBoxOccupants, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jComboBoxRoomtype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldCheckoutTime, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldCheckinTime))
+                                    .addGap(225, 225, 225)
+                                    .addComponent(jButtonBack))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(14, 14, 14)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(14, 14, 14))
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(869, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBoxLibrary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxOccupants, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSearch))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(jButtonBack)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBoxLibraryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jComboBoxOccupants, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextFieldCheckoutTime, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldCheckinTime, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBoxRoomtype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addComponent(jButtonSearch)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jButtonBookRoom)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jButtonCheckoutRoom)
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(399, 399, 399))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -81,20 +266,163 @@ public class Rooms extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(460, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBoxLibraryNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLibraryNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxLibraryNameActionPerformed
+
+    private void jTextFieldCheckoutTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCheckoutTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCheckoutTimeActionPerformed
+
+    private void jTextFieldCheckinTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCheckinTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCheckinTimeActionPerformed
+
+    private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
+        // TODO add your handling code here:
+        try { 
+            String libId;
+            String libName;
+            PreparedStatement stmt;
+            libName= jComboBoxLibraryName.getSelectedItem().toString();
+            if ("Hunt".equals(libName))
+                libId="1";
+            else
+                libId="2";
+if("Students".equals(GlobalData.loginType)) {
+       //stmt = GlobalData.connection.prepareStatement("SELECT ROOMID,LIBID,ROOMTYPE,CAPACITY,FLOOR from Rooms where ROOMID not in(select roomno from s_rooms_history where checkouttime between to_date(?,'DD-MON-YYYY hh24:mi:ss') and to_date(?,'DD-MON-YYYY hh24:mi:ss')) and capacity >= ? and roomtype=? and libid= ?");
+       stmt = GlobalData.connection.prepareStatement("SELECT R.ROOMID,L.LIBNAME,R.ROOMTYPE,R.CAPACITY,R.FLOOR from Rooms R, LIBRARY L where R.ROOMID not in(select roomno from s_rooms_history where checkouttime between to_date(?,'DD-MON-YYYY hh24:mi:ss') and to_date(?,'DD-MON-YYYY hh24:mi:ss')) and R.capacity >= ? and R.roomtype=? and R.libid= ? AND L.LIBID=R.LIBID");
+        } 
+else{
+stmt = GlobalData.connection.prepareStatement("SELECT R.ROOMID,L.LIBNAME,R.ROOMTYPE,R.CAPACITY,R.FLOOR from Rooms R, LIBRARY L where R.ROOMID not in(select roomno from f_rooms_history where checkouttime between to_date(?,'DD-MON-YYYY hh24:mi:ss') and to_date(?,'DD-MON-YYYY hh24:mi:ss')) and R.capacity >= ? and R.roomtype=? and R.libid= ? AND L.LIBID=R.LIBID");
+}
+
+//PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT ROOMID,LIBID,ROOMTYPE,CAPACITY,FLOOR from Rooms where ROOMID not in(select roomno from s_rooms_history where checkouttime>= to_date(?,'DD-MON-YYYY hh24:mi:ss') and checkintime<= to_date(?,'DD-MON-YYYY hh24:mi:ss')) and capacity >= ? and roomtype=? and libid= ?");
+            stmt.setString(1,jTextFieldCheckoutTime.getText());
+            stmt.setString(2,jTextFieldCheckinTime.getText());
+            stmt.setString(3,jComboBoxOccupants.getSelectedItem().toString());
+            stmt.setString(4,jComboBoxRoomtype.getSelectedItem().toString());
+            stmt.setString(5,libId);
+            ResultSet rs = stmt.executeQuery();
+            jTableRooms.setModel(DbUtils.resultSetToTableModel(rs));
+            stmt.close();
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
+            System.out.println("Connection Failed! Check output console");
+        }                   
+    }//GEN-LAST:event_jButtonSearchActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        try {
+            PreparedStatement stmt;
+            if("Students".equals(GlobalData.loginType)){
+                jTableBookedRoomsFac.hide();
+                stmt = GlobalData.connection.prepareStatement("SELECT R.ROOMNO,L.LIBNAME,R.ROOMCAPACITY,R.CHECKOUTTIME,R.CHECKINTIME from S_ROOMS_HISTORY R, LIBRARY L where R.STUDENTNO=? AND R.checkouttime >= to_date(SYSDATE,'DD-MON-YYYY hh24:mi:ss') AND R.LIBID=L.LIBID AND R.ACTUALCHECKOUTTIME IS NULL");
+                stmt.setString(1,GlobalData.loginSession); //studentno
+                ResultSet rs = stmt.executeQuery();
+                jTableBookedRooms.setModel(DbUtils.resultSetToTableModel(rs));
+                stmt.close();
+            }
+            else{
+            jTableBookedRooms.hide();
+            stmt = GlobalData.connection.prepareStatement("SELECT R.ROOMNO,L.LIBNAME,R.ROOMCAPACITY,R.CHECKOUTTIME,R.CHECKINTIME from F_ROOMS_HISTORY R, LIBRARY L where R.FACULTYNO=? AND R.checkouttime >= to_date(SYSDATE,'DD-MON-YYYY hh24:mi:ss') AND R.LIBID=L.LIBID AND R.ACTUALCHECKOUTTIME IS NULL");
+            stmt.setString(1,GlobalData.loginSession); //studentno
+            ResultSet rs = stmt.executeQuery();
+            jTableBookedRoomsFac.setModel(DbUtils.resultSetToTableModel(rs));
+            stmt.close();
+            }
+          
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
+            System.out.println("Connection Failed! Check output console");
+        }      
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButtonBookRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBookRoomActionPerformed
+        // TODO add your handling code here:
+        try{
+            CallableStatement callstmt;
+            if("Students".equals(GlobalData.loginType)) {
+            callstmt = GlobalData.connection.prepareCall("{call proc_stud_book_rooms(?,?,?,?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'),to_date(?,'DD-MON-YYYY hh24:mi:ss'))}");
+            }
+            else{
+            callstmt = GlobalData.connection.prepareCall("{call proc_fac_book_rooms(?,?,?,?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'),to_date(?,'DD-MON-YYYY hh24:mi:ss'))}");
+            }
+            
+              
+                   callstmt.setString(1,GlobalData.loginSession); //studentno
+                   callstmt.setString(2,jTableRooms.getValueAt(jTableRooms.getSelectedRow(),0).toString() ); //roomno   
+                   callstmt.setString(3,jTableRooms.getValueAt(jTableRooms.getSelectedRow(),1).toString()); //libNAME
+                   callstmt.setString(4,jTableRooms.getValueAt(jTableRooms.getSelectedRow(),3).toString() ); //capacity
+                   callstmt.setString(5,jTableRooms.getValueAt(jTableRooms.getSelectedRow(),2).toString() ); //roomtype
+                   callstmt.setString(6,jTextFieldCheckoutTime.getText());
+                   callstmt.setString(7,jTextFieldCheckinTime.getText());
+                   
+                            
+                   callstmt.executeUpdate();
+                   callstmt.close();
+                   JOptionPane.showMessageDialog(null, "Your room has been booked for the selected library and number of occupants", "Success", JOptionPane.PLAIN_MESSAGE);
+                 }
+                catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
+            System.out.println("Connection Failed! Check output console");
+        }      
+    }//GEN-LAST:event_jButtonBookRoomActionPerformed
+
+    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
+                // TODO add your handling code here:
+                // TODO add your handling code here:
+        new Resources().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonBackActionPerformed
+
+    private void jButtonCheckoutRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckoutRoomActionPerformed
+       // TODO add your handling code here:
+        
+        try{
+            CallableStatement callstmt;
+            if("Students".equals(GlobalData.loginType)){
+                callstmt = GlobalData.connection.prepareCall("{call proc_stud_checkout_rooms(?,to_date(to_char(to_date(?,'yyyy-MM-dd hh24:mi:ss'),'DD-MON-YYYY hh24:mi:ss'),'DD-MON-YYYY hh24:mi:ss'))}"); 
+                callstmt.setString(1,GlobalData.loginSession); //studentno/facno
+                callstmt.setString(2,jTableBookedRooms.getValueAt(jTableBookedRooms.getSelectedRow(),3).toString().substring(0, jTableBookedRooms.getValueAt(jTableBookedRooms.getSelectedRow(),3).toString().length()-2)); 
+            }
+            else{
+                callstmt = GlobalData.connection.prepareCall("{call proc_fac_checkout_rooms(?,to_date(to_char(to_date(?,'yyyy-MM-dd hh24:mi:ss'),'DD-MON-YYYY hh24:mi:ss'),'DD-MON-YYYY hh24:mi:ss'))}"); 
+                callstmt.setString(1,GlobalData.loginSession); //studentno/facno
+                callstmt.setString(2,jTableBookedRoomsFac.getValueAt(jTableBookedRoomsFac.getSelectedRow(),3).toString().substring(0, jTableBookedRoomsFac.getValueAt(jTableBookedRoomsFac.getSelectedRow(),3).toString().length()-2));
+            }
+                callstmt.executeUpdate();
+                callstmt.close();
+                JOptionPane.showMessageDialog(null, "Your room has been checked out", "Success", JOptionPane.PLAIN_MESSAGE);
+        
+                  
+               
+        }
+       catch (SQLException e) {
+           JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
+            System.out.println("Connection Failed! Check output console");
+        }      
+        
+    }//GEN-LAST:event_jButtonCheckoutRoomActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,19 +440,16 @@ public class Rooms extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Rooms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Rooms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Rooms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Rooms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Rooms().setVisible(true);
             }
@@ -132,11 +457,28 @@ public class Rooms extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonBookRoom;
+    private javax.swing.JButton jButtonCheckoutRoom;
     private javax.swing.JButton jButtonSearch;
-    private javax.swing.JComboBox jComboBoxLibrary;
+    private javax.swing.JComboBox jComboBoxLibraryName;
     private javax.swing.JComboBox jComboBoxOccupants;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox jComboBoxRoomtype;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTableBookedRooms;
+    private javax.swing.JTable jTableBookedRoomsFac;
+    private javax.swing.JTable jTableRooms;
+    private javax.swing.JTextField jTextFieldCheckinTime;
+    private javax.swing.JTextField jTextFieldCheckoutTime;
     // End of variables declaration//GEN-END:variables
 }

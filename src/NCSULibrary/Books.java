@@ -46,6 +46,8 @@ public class Books extends javax.swing.JFrame {
         jTextEndDate = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jComboBooktype = new javax.swing.JComboBox();
+        jLabel9 = new javax.swing.JLabel();
         jButtonBack = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -53,12 +55,15 @@ public class Books extends javax.swing.JFrame {
         jButtonReturn = new javax.swing.JButton();
         jButtonRenew = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jTextRenewEndDate = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableBooksRequest = new javax.swing.JTable();
         jButtonRequest = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jButtonReserve = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -84,34 +89,39 @@ public class Books extends javax.swing.JFrame {
 
         jLabel4.setText("End Date(DD-MON-YYYY hh24:mi:ss)");
 
+        jComboBooktype.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Physical", "Electronic" }));
+
+        jLabel9.setText("If selected book has both types, choose");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addComponent(jTextStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(140, 140, 140)
+                                .addComponent(jTextEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBooktype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(96, 96, 96))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jTextStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(145, 145, 145)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jTextEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonCheckout)
-                        .addGap(93, 93, 93))))
+                        .addGap(420, 420, 420)
+                        .addComponent(jButtonCheckout)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,14 +133,16 @@ public class Books extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(0, 44, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCheckout)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBooktype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jButtonCheckout)
                 .addContainerGap())
         );
 
@@ -172,6 +184,8 @@ public class Books extends javax.swing.JFrame {
 
         jLabel2.setText("Return books");
 
+        jLabel7.setText("Renew till(DD-MON-YYYY hh24:mi:ss)");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -179,31 +193,37 @@ public class Books extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButtonReturn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonRenew)
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45))))))
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addComponent(jButtonReturn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextRenewEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jButtonRenew)
+                .addGap(201, 201, 201))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(280, 280, 280))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonReturn)
-                    .addComponent(jButtonRenew))
+                    .addComponent(jButtonRenew)
+                    .addComponent(jTextRenewEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -243,7 +263,7 @@ public class Books extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(45, 45, 45))
         );
@@ -262,12 +282,21 @@ public class Books extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButtonReserve.setText("Reserve");
+        jButtonReserve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReserveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonReserve, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(426, 426, 426)
                 .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
             .addGroup(layout.createSequentialGroup()
@@ -281,22 +310,27 @@ public class Books extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(499, 499, 499)
                         .addComponent(jLabel6)))
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jButtonBack)
-                .addGap(31, 31, 31))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jButtonBack)
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonReserve)
+                        .addContainerGap())))
         );
 
         pack();
@@ -304,27 +338,30 @@ public class Books extends javax.swing.JFrame {
 
     private void jButtonCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckoutActionPerformed
         // TODO add your handling code here:
-       // Connection connection = null;
-       // if (jTextStartDate.toString().isEmpty() || jTextEndDate.toString().isEmpty())
-         //          {
-           //        JOptionPane.showMessageDialog(null, "Please enter start/end date and time", "Error", JOptionPane.PLAIN_MESSAGE);
-        //}else
-    //    {
         try { 
             //PreparedStatement stmt = GlobalData.connection.prepareStatement("insert into s_books_history values(?,?,?,?,NULL)");
-            CallableStatement stmt = GlobalData.connection.prepareCall("{call checkout_books(?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'),to_date(?,'DD-MON-YYYY hh24:mi:ss'),?,?)}");
+            CallableStatement stmt;
+        if (GlobalData.loginType=="Faculty")
+        {
+          stmt = GlobalData.connection.prepareCall("{call proc_fac_checkout_books(?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'),to_date(?,'DD-MON-YYYY hh24:mi:ss'),?,?,?)}");   
+        }
+        else
+        {        
+          stmt = GlobalData.connection.prepareCall("{call proc_stud_checkout_books(?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'),to_date(?,'DD-MON-YYYY hh24:mi:ss'),?,?,?)}");
+        }
+         
+            //CallableStatement stmt = GlobalData.connection.prepareCall("{call proc_stud_checkout_books(?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'),to_date(?,'DD-MON-YYYY hh24:mi:ss'),?,?)}");
                    stmt.setString(1,GlobalData.loginSession);
                    stmt.setString(2,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),0).toString() );
-                   //stmt.setTimestamp(3,java.sql.Timestamp.valueOf(jTextStartDate.getText()));
-                   //stmt.setTimestamp(4,java.sql.Timestamp.valueOf(jTextEndDate.getText()));
                    stmt.setString(3,jTextStartDate.getText());
                    stmt.setString(4,jTextEndDate.getText());
                    stmt.setString(5,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),8).toString() );
                    stmt.setString(6,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),7).toString() );
+                   stmt.setString(7, jComboBooktype.getSelectedItem().toString());
                    stmt.executeUpdate();
-            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies - 1 where isbn=?");
-            stmt1.setString(1,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),0).toString() );
-            stmt1.executeUpdate();      
+          //  PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies - 1 where isbn=?");
+            //stmt1.setString(1,jTableBooksCheckout.getValueAt(jTableBooksCheckout.getSelectedRow(),0).toString() );
+            //stmt1.executeUpdate();      
 
             // Close the Statement
             stmt.close();
@@ -335,15 +372,44 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
             return;
-
       //  }
     }//GEN-LAST:event_jButtonCheckoutActionPerformed
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
+        // TODO add your handling code here
+                if (GlobalData.loginType=="Faculty")
+        {
+            
+          try {
+            //Statement stmt = connection.createStatement();
+            PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT ISBN,TITLE,EDITION,AUTHOR,PUBLISHER,YEAR_OF_PUBLICATION,COURSEID,BOOKTYPE,RESERVED,NUMBER_OF_COPIES from books where NUMBER_OF_COPIES>0 and ISBN not in(select ISBN from f_books_history where facultyno=? and actualreturndate is NULL)");
+            stmt.setString(1,GlobalData.loginSession);
+            ResultSet rs = stmt.executeQuery();
+            jTableBooksCheckout.setModel(DbUtils.resultSetToTableModel(rs));
+            
+            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("SELECT s.FACULTYNO,b.ISBN, b.TITLE,s.CHECKOUTDATE, s.DUEDATE from f_books_history s,books b where s.ISBN = b.ISBN and s.actualreturndate is NULL and s.facultyno= ?");
+            stmt1.setString(1,GlobalData.loginSession);
+            ResultSet rs1 = stmt1.executeQuery();
+            jTableBooksReturn.setModel(DbUtils.resultSetToTableModel(rs1));
+            
+            PreparedStatement stmt2 = GlobalData.connection.prepareStatement("SELECT ISBN,TITLE,EDITION,AUTHOR,PUBLISHER,YEAR_OF_PUBLICATION,COURSEID,BOOKTYPE,RESERVED,NUMBER_OF_COPIES from books where NUMBER_OF_COPIES=0 and  ISBN NOT IN(select ISBN from f_books_history where actualreturndate is NULL and facultyno=?)");
+            stmt2.setString(1,GlobalData.loginSession);
+            ResultSet rs2 = stmt2.executeQuery();
+            jTableBooksRequest.setModel(DbUtils.resultSetToTableModel(rs2));
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return;
+        }
+        }
+        else
+        {        
+            jButtonReserve.hide();
         try {
             //Statement stmt = connection.createStatement();
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT ISBN,TITLE,EDITION,AUTHOR,PUBLISHER,YEAR_OF_PUBLICATION,COURSEID,BOOKTYPE,RESERVED,NUMBER_OF_COPIES from books where NUMBER_OF_COPIES>0");
+            PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT ISBN,TITLE,EDITION,AUTHOR,PUBLISHER,YEAR_OF_PUBLICATION,COURSEID,BOOKTYPE,RESERVED,NUMBER_OF_COPIES from books where NUMBER_OF_COPIES>0 and ISBN not in(select ISBN from s_books_history where studentno=? and actualreturndate is NULL)");
+            stmt.setString(1,GlobalData.loginSession);
             ResultSet rs = stmt.executeQuery();
             jTableBooksCheckout.setModel(DbUtils.resultSetToTableModel(rs));
             
@@ -357,20 +423,13 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
             ResultSet rs2 = stmt2.executeQuery();
             jTableBooksRequest.setModel(DbUtils.resultSetToTableModel(rs2));
 
-            // Close the RseultSet
-            //rs.close();
-
-            // Close the Statement
-            //stmt.close();
-               //stmt1.close();
-            // Close the connection
         } catch (SQLException e) {
-
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
             return;
-
         }
+        }
+        
     }//GEN-LAST:event_formWindowOpened
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
@@ -381,18 +440,42 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
 
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed
         // TODO add your handling code here:
-        try {
-
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where studentno=? and isbn=? and actualreturndate is NULL");
-        
+                if (GlobalData.loginType=="Faculty")
+        {
+        try {  
+            CallableStatement stmt = GlobalData.connection.prepareCall("{call proc_fac_return_books(?,?)}");
                     stmt.setString(1,GlobalData.loginSession);
                     stmt.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
                    stmt.executeUpdate();
+                   CallableStatement stmt1 = GlobalData.connection.prepareCall("{call proc_clear_books_waitlist(?)}");
+                    stmt1.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
+                   stmt1.executeUpdate();
+
+            stmt.close();
+JOptionPane.showMessageDialog(null, "Your book has been returned", "Success", JOptionPane.PLAIN_MESSAGE);
+
+        } catch (SQLException e) {
+
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return;
+        }
+        }
+        else
+        {        
+        try {  
+            CallableStatement stmt = GlobalData.connection.prepareCall("{call proc_stud_return_books(?,?)}");
+                    stmt.setString(1,GlobalData.loginSession);
+                    stmt.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
+                   stmt.executeUpdate();
+                   CallableStatement stmt1 = GlobalData.connection.prepareCall("{call proc_clear_books_waitlist(?)}");
+                    stmt1.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
+                   stmt1.executeUpdate();
                    
-            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies + 1 where ISBN=?");
-            stmt1.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
-            stmt1.executeUpdate();
-            Date date=new Date();
+            //PreparedStatement stmt1 = GlobalData.connection.prepareStatement("update books set number_of_copies=number_of_copies + 1 where ISBN=?");
+            //stmt1.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
+            //stmt1.executeUpdate();
+            
             
             //PreparedStatement stmt2 = GlobalData.connection.prepareStatement("update students set dues=dues + 2*(CEIL(sysdate-to_date(?))) where studentno=(select studentno from students where studentno=?)");
             //stmt2.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),4).toString() );
@@ -401,7 +484,7 @@ JOptionPane.showMessageDialog(null, "Your book has been checked out", "Success",
             
             // Close the Statement
             stmt.close();
-            stmt1.close();
+           // stmt1.close();
 JOptionPane.showMessageDialog(null, "Your book has been returned", "Success", JOptionPane.PLAIN_MESSAGE);
 
         } catch (SQLException e) {
@@ -411,25 +494,35 @@ JOptionPane.showMessageDialog(null, "Your book has been returned", "Success", JO
             return;
 
         }
+        }
+        
     }//GEN-LAST:event_jButtonReturnActionPerformed
 
     private void jButtonRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRenewActionPerformed
         // TODO add your handling code here:
-        try {       
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("update s_books_history set actualreturndate=sysdate where ISBN=? and studentno=? and actualreturndate is NULL");
-                   stmt.setString(1,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
-                   stmt.setString(2,GlobalData.loginSession);
-                   stmt.executeUpdate();
+        CallableStatement stmt;
+        try {
+        if (GlobalData.loginType=="Faculty")
+        {
+            stmt= GlobalData.connection.prepareCall("{call proc_fac_renew_books(?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'))}");
+        }
+        else{
+            stmt= GlobalData.connection.prepareCall("{call proc_stud_renew_books(?,?,to_date(?,'DD-MON-YYYY hh24:mi:ss'))}");
+        }
+            stmt.setString(1,GlobalData.loginSession);
+            stmt.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );       
+            stmt.setString(3,jTextRenewEndDate.getText());
+            stmt.executeUpdate();
                    
-            PreparedStatement stmt1 = GlobalData.connection.prepareStatement("insert into s_books_history values(?,?,sysdate,NULL,NULL)");
-                   stmt1.setString(1,GlobalData.loginSession);
-                   stmt1.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
-                   stmt1.executeUpdate();
+            //PreparedStatement stmt1 = GlobalData.connection.prepareStatement("insert into s_books_history values(?,?,sysdate,NULL,NULL)");
+              //     stmt1.setString(1,GlobalData.loginSession);
+                //   stmt1.setString(2,jTableBooksReturn.getValueAt(jTableBooksReturn.getSelectedRow(),1).toString() );
+                  // stmt1.executeUpdate();
       
 
             // Close the Statement
             stmt.close();
-            stmt1.close();
+           // stmt1.close();
             JOptionPane.showMessageDialog(null, "Your book has been renewed", "Success", JOptionPane.PLAIN_MESSAGE);
                     } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
@@ -440,11 +533,18 @@ JOptionPane.showMessageDialog(null, "Your book has been returned", "Success", JO
 
     private void jButtonRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRequestActionPerformed
         // TODO add your handling code here:
-        try { 
-            
-            CallableStatement stmt = GlobalData.connection.prepareCall("{call proc_queue_books('S',?,?)}");
+        try {
+            CallableStatement stmt;
+        if (GlobalData.loginType=="Faculty")
+        {
+            stmt = GlobalData.connection.prepareCall("{call proc_queue_books('F',?,?)}");
+        }
+        else
+        {
+            stmt = GlobalData.connection.prepareCall("{call proc_queue_books('S',?,?)}");
+        }
                    stmt.setString(1,GlobalData.loginSession);
-                   stmt.setString(2,jTableBooksCheckout.getValueAt(jTableBooksRequest.getSelectedRow(),0).toString() );
+                   stmt.setString(2,jTableBooksRequest.getValueAt(jTableBooksRequest.getSelectedRow(),0).toString() );
                    stmt.executeUpdate();
 
             stmt.close();
@@ -459,6 +559,12 @@ JOptionPane.showMessageDialog(null, "You have been put on waitlist for this queu
       //  }
     }     
     }//GEN-LAST:event_jButtonRequestActionPerformed
+
+    private void jButtonReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReserveActionPerformed
+        // TODO add your handling code here:
+                        new ReserveBooks().setVisible(true);
+                this.setVisible(false);
+    }//GEN-LAST:event_jButtonReserveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -500,13 +606,17 @@ JOptionPane.showMessageDialog(null, "You have been put on waitlist for this queu
     private javax.swing.JButton jButtonCheckout;
     private javax.swing.JButton jButtonRenew;
     private javax.swing.JButton jButtonRequest;
+    private javax.swing.JButton jButtonReserve;
     private javax.swing.JButton jButtonReturn;
+    private javax.swing.JComboBox jComboBooktype;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -517,6 +627,7 @@ JOptionPane.showMessageDialog(null, "You have been put on waitlist for this queu
     private javax.swing.JTable jTableBooksRequest;
     private javax.swing.JTable jTableBooksReturn;
     private javax.swing.JTextField jTextEndDate;
+    private javax.swing.JTextField jTextRenewEndDate;
     private javax.swing.JTextField jTextStartDate;
     // End of variables declaration//GEN-END:variables
 }

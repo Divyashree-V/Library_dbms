@@ -5,6 +5,12 @@
  */
 package NCSULibrary;
 
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author shiva
@@ -74,6 +80,11 @@ public class Home extends javax.swing.JFrame {
         });
 
         jButtonNotifications.setText("Notifications");
+        jButtonNotifications.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNotificationsActionPerformed(evt);
+            }
+        });
 
         jButtonDues.setText("Dues balance");
         jButtonDues.addActionListener(new java.awt.event.ActionListener() {
@@ -152,18 +163,50 @@ public class Home extends javax.swing.JFrame {
 
     private void jButtonProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProfileActionPerformed
         // TODO add your handling code here:
-        new Profile().setVisible(true);
-        this.setVisible(false);
+        if (GlobalData.loginType=="Faculty")
+        {
+          new FacultyProfile().setVisible(true);
+        this.setVisible(false);  
+        }
+        else
+        {        new StudentProfile().setVisible(true);
+        this.setVisible(false);}
     }//GEN-LAST:event_jButtonProfileActionPerformed
 
     private void jButtonResourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResourcesActionPerformed
         // TODO add your handling code here:
-        new Resources().setVisible(true);
-        this.setVisible(false);
+                try { 
+            //PreparedStatement stmt = GlobalData.connection.prepareStatement("insert into s_books_history values(?,?,?,?,NULL)");
+            CallableStatement stmt;
+        if (GlobalData.loginType=="Faculty")
+        {
+          stmt = GlobalData.connection.prepareCall("{call proc_check_hold('F',?)}");   
+        }
+        else
+        {        
+          stmt = GlobalData.connection.prepareCall("{call proc_check_hold('S',?)}");
+        }
+            stmt.setString(1,GlobalData.loginSession);
+            stmt.executeUpdate(); 
+            stmt.close();
+            new Resources().setVisible(true);
+            this.setVisible(false);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return;
+      //  }
+    }                                               
     }//GEN-LAST:event_jButtonResourcesActionPerformed
 
     private void jButtonLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogoutActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            GlobalData.connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
         new Login().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonLogoutActionPerformed
@@ -176,6 +219,8 @@ public class Home extends javax.swing.JFrame {
 
     private void jButtonCheckedOutResourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckedOutResourcesActionPerformed
         // TODO add your handling code here:
+        new CheckedOutResources().setVisible(true);
+        this.setVisible(false);
         
     }//GEN-LAST:event_jButtonCheckedOutResourcesActionPerformed
 
@@ -189,6 +234,12 @@ jLabelWelcome.setText("Welcome "+ GlobalData.loginSession);
                 new RequestedResources().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonResourceRequestsActionPerformed
+
+    private void jButtonNotificationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNotificationsActionPerformed
+        // TODO add your handling code here:
+                new Notifications().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonNotificationsActionPerformed
 
     /**
      * @param args the command line arguments

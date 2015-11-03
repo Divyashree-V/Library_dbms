@@ -84,7 +84,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButtonBooks">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Books and ebooks"/>
+            <Property name="text" type="java.lang.String" value="Books"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBooksActionPerformed"/>
@@ -94,11 +94,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Journals"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonJournalsActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonConferences">
           <Properties>
             <Property name="text" type="java.lang.String" value="Conference Proceedings"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConferencesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonBack">
           <Properties>

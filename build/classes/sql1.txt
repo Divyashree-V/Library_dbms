@@ -56,11 +56,22 @@ CREATE TABLE  "FACULTY"
 	"CATEGORY" VARCHAR2(50), 
 	"NATIONALITY" VARCHAR2(30), 
 	"DEPARTMENT" VARCHAR2(50), 
-	"COURSE_TAUGHT" VARCHAR2(30), 
-	 CONSTRAINT "CHK_CATEGORY" CHECK (CATEGORY IN ('Assistant Professor','Associate Professor','Professor','Lecturer'))
-          CONSTRAINT "FACULTY_FK" FOREIGN KEY ("COURSE_TAUGHT")
-	  REFERENCES  "COURSES" ("COURSEID")
+	"COURSE_TAUGHT" VARCHAR2(30) REFERENCES  "COURSES" ("COURSEID"), 
+        "DUES" NUMBER(6,2), 
+	CONSTRAINT "CHK_CATEGORY" CHECK (CATEGORY IN ('Assistant Professor','Associate Professor','Professor','Lecturer'))
 );
+
+
+insert into faculty values(
+'f1',
+'hebber',
+'h',
+'123',
+'Professor',
+'us',
+'CSC',
+'CSC505',
+0)
 
 CREATE TABLE "LIBRARY"
  ( LIBID NUMBER(2) PRIMARY KEY,
@@ -85,15 +96,23 @@ CREATE TABLE  "ROOMS"
 
 CREATE TABLE "COURSES"
 (
-	"COURSEID" VARCHAR2(10) PRIMARY KEY,
+	"COURSEID" VARCHAR2(10),
 	"COURSENAME" VARCHAR2(50),
         "STUDENT_ENROLLED" VARCHAR2(50),
         "FACULTY_NAME" VARCHAR2(50),
-        CONSTRAINT "COURSES_STUDENT_FK" FOREIGN KEY ("STUDENTS_ENROLLED")
-	  REFERENCES  "STUDENTS" ("NAME")
+        CONSTRAINT "COURSES_STUDENT_FK" FOREIGN KEY ("STUDENT_ENROLLED")
+	  REFERENCES  "STUDENTS" ("STUDENTNO"),
         CONSTRAINT "COURSES_FACULTY_FK" FOREIGN KEY ("FACULTY_NAME")
-	  REFERENCES  "FACULTY" ("NAME")
+	  REFERENCES  "FACULTY" ("FACULTYNO")
 );
+
+insert into courses values(
+'CSC505','Algos','1','f1'
+)
+
+insert into courses values(
+'CSC505','Algos','2','f1'
+)
 
 
 CREATE TABLE  "BOOKS" 
@@ -104,7 +123,7 @@ CREATE TABLE  "BOOKS"
 	"PUBLISHER" VARCHAR2(50) NOT NULL, 
 	"YEAR_OF_PUBLICATION" VARCHAR2(50), 
 	"COURSEID" VARCHAR2(10), 
-	"BOOKTYPE" VARCHAR2(10),
+	"BOOKTYPE" VARCHAR2(50),
         "RESERVED" VARCHAR2(10),
         "NUMBER_OF_COPIES" NUMBER(10,0) NOT NULL,
 	 CONSTRAINT "BOOKS_PK" PRIMARY KEY ("ISBN"),
@@ -156,6 +175,14 @@ create table f_books_history(
 facultyno varchar2(30) references faculty(FACULTYNO),
 isbn varchar2(30) references books(isbn),
 checkoutdate date,
+duedate date,
+actualreturndate date
+)
+
+create table f_books_reserve(
+facultyno varchar2(30) references faculty(FACULTYNO),
+isbn varchar2(30) references books(isbn),
+reservedate date,
 duedate date,
 actualreturndate date
 )

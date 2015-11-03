@@ -35,7 +35,7 @@ public class Publications extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButtonBooks.setText("Books and ebooks");
+        jButtonBooks.setText("Books");
         jButtonBooks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBooksActionPerformed(evt);
@@ -43,8 +43,18 @@ public class Publications extends javax.swing.JFrame {
         });
 
         jButtonJournals.setText("Journals");
+        jButtonJournals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonJournalsActionPerformed(evt);
+            }
+        });
 
         jButtonConferences.setText("Conference Proceedings");
+        jButtonConferences.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConferencesActionPerformed(evt);
+            }
+        });
 
         jButtonBack.setText("Back");
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
@@ -115,6 +125,18 @@ public class Publications extends javax.swing.JFrame {
         new Resources().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonBackActionPerformed
+
+    private void jButtonJournalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJournalsActionPerformed
+        // TODO add your handling code here:
+                new Journals().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonJournalsActionPerformed
+
+    private void jButtonConferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConferencesActionPerformed
+        // TODO add your handling code here:
+                new ConfProceedings().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonConferencesActionPerformed
 
     /**
      * @param args the command line arguments

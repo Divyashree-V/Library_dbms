@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package NCSULibrary;
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -175,6 +177,35 @@ public class Login extends javax.swing.JFrame {
       //  } catch (ClassNotFoundException ex) {
         //    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+                try { 
+            if(GlobalData.loginType.equalsIgnoreCase("Student"))
+            {
+            CallableStatement stmt1 = GlobalData.connection.prepareCall("{call proc_s_notification_checkout(?)}");
+                   stmt1.setString(1,jTextNumber.getText());
+                   stmt1.executeUpdate();
+
+            //stmt1.close();
+            }
+            else
+            {
+                CallableStatement stmt1 = GlobalData.connection.prepareCall("{call proc_f_notification_checkout(?)}");
+                   stmt1.setString(1,jTextNumber.getText());
+                   stmt1.executeUpdate();
+
+            //stmt1.close();
+ 
+            
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
+            
+            e.printStackTrace();
+            return;
+
+      //  }
+    }   
+
         //GlobalData.loginSession=jTextNumber.getText();
     }//GEN-LAST:event_jButtonLoginActionPerformed
     

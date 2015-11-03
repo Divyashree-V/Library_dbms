@@ -5,11 +5,13 @@
  */
 package NCSULibrary;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -123,70 +125,66 @@ public class Dues extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here
-               System.out.println("-------- Oracle JDBC Connection Testing ------");
-
+        // TODO add your handling code 
+        if (GlobalData.loginType=="Faculty")
+        {
 		try {
-
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-
-		} catch (ClassNotFoundException e) {
-
-			System.out.println("Where is your Oracle JDBC Driver?");
+                      PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT dues from faculty where facultyno=?");   
+                      stmt.setString(1,GlobalData.loginSession);
+                      ResultSet rs = stmt.executeQuery(); 
+                      rs.next();
+                      jTextFieldDues.setText(rs.getString("dues"));
+		      rs.close();
+		      stmt.close();
+                } catch (SQLException e) {
+			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
 			return;
-
 		}
-
-		System.out.println("Oracle JDBC Driver Registered!");
-
-		Connection connection = null;
-
-		try {
-
-			connection = DriverManager.getConnection(
-					"jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:ORCL", "sgulati2",
-					"200109633");
-			//Statement stmt = connection.createStatement();
-                        PreparedStatement stmt = connection.prepareStatement("SELECT dues from students where studentno=?");   
+        }
+        else{
+            try {
+                        PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT dues from students where studentno=?");   
                    stmt.setString(1,GlobalData.loginSession);
 		   // ResultSet rs = stmt.executeQuery("SELECT * from students where fname='?'"+jTextField1.getText());
                     ResultSet rs = stmt.executeQuery(); 
                    rs.next();
                             jTextFieldDues.setText(rs.getString("dues"));
-                            
-			/*while (rs.next ())
-		    	{
-					System.out.println(rs.getString("libid") + "\n");
-		    	
-
-		    	}*/
-		      // Close the RseultSet
 		      rs.close();
-
-		      // Close the Statement
 		      stmt.close();
-
-		      // Close the connection
-		      connection.close();  
-
-		} catch (SQLException e) {
-
+                } catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
 			return;
-
 		}
-
-		if (connection != null) {
-			System.out.println("You made it, take control your database now!");
-		} else {
-			System.out.println("Failed to make connection!");
-		}
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void jButtonClearDuesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearDuesActionPerformed
         // TODO add your handling code here:
+        try { 
+            //PreparedStatement stmt = GlobalData.connection.prepareStatement("insert into s_books_history values(?,?,?,?,NULL)");
+            CallableStatement stmt;
+        if (GlobalData.loginType=="Faculty")
+        {
+          stmt = GlobalData.connection.prepareCall("{call proc_clear_dues('F',?)}");   
+        }
+        else
+        {        
+          stmt = GlobalData.connection.prepareCall("{call proc_clear_dues('S',?)}");
+        }
+                   stmt.setString(1,GlobalData.loginSession);
+                   stmt.executeUpdate();
+            stmt.close();
+JOptionPane.showMessageDialog(null, "Your dues have been cleared.", "Success", JOptionPane.PLAIN_MESSAGE);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR!", JOptionPane.PLAIN_MESSAGE);
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return;
+      //  }
+    }
     }//GEN-LAST:event_jButtonClearDuesActionPerformed
 
     /**

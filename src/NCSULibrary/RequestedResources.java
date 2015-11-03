@@ -50,7 +50,12 @@ public class RequestedResources extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableCamera = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTableRooms = new javax.swing.JTable();
         jButtonBack = new javax.swing.JButton();
+        jButtonBack1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -140,12 +145,72 @@ public class RequestedResources extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTableCamera);
 
-        jButtonBack.setText("Back");
+        jLabel5.setText("Rooms");
+
+        jTableRooms.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jTableRooms);
+
+        jButtonBack.setText("Queue");
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBackActionPerformed(evt);
             }
         });
+
+        jButtonBack1.setText("Back");
+        jButtonBack1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBack1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(643, Short.MAX_VALUE)
+                .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(141, 141, 141))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 898, Short.MAX_VALUE)))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 130, Short.MAX_VALUE)))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(131, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBack)
+                    .addComponent(jButtonBack1))
+                .addGap(23, 23, 23))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 149, Short.MAX_VALUE)))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGap(32, 32, 32)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(55, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -156,11 +221,12 @@ public class RequestedResources extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(68, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addContainerGap(188, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addContainerGap(24, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(54, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,8 +235,12 @@ public class RequestedResources extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(jButtonBack))
+                .addContainerGap(221, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addContainerGap(152, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -182,7 +252,7 @@ public class RequestedResources extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -234,7 +304,7 @@ public class RequestedResources extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +313,7 @@ public class RequestedResources extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -255,7 +325,25 @@ public class RequestedResources extends javax.swing.JFrame {
 
         try {
             //Statement stmt = connection.createStatement();
-            PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT b.ISBN,b.TITLE,s.CHECKOUTDATE,s.RETURNDATE,s.ACTUALRETURNDATE from books b,s_books_history s where b.bookid=s.bookid and s.studentno=?");
+            PreparedStatement stmt = null;
+            PreparedStatement stmt1 = null;
+            PreparedStatement stmt2 = null;
+            PreparedStatement stmt3 = null;
+            PreparedStatement stmt4 = null;
+            
+            if(GlobalData.loginType.equalsIgnoreCase("faculty")){
+                stmt = GlobalData.connection.prepareStatement("SELECT b.ISBN,b.TITLE,f.CHECKOUTDATE,f.duedate,f.ACTUALRETURNDATE from books b,f_books_history f where b.isbn=f.isbn and f.facultyno=?");
+                stmt1 = GlobalData.connection.prepareStatement("SELECT j.JOURNALID,j.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from journals j,f_journals_history s where j.JOURNALID=s.JOURNALID and s.facultyno=?");
+                stmt2 = GlobalData.connection.prepareStatement("SELECT c.CONFERENCEID,c.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from CONFERENCE_PAPERS c,f_CONFERENCE_PAPERS_history s where c.CONFERENCEID=s.CONFERENCEID and s.facultyno=?");
+                stmt3 = GlobalData.connection.prepareStatement("SELECT c.CAMERAID,c.MAKE,c.MODEL,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from CAMERA c,f_camera_history s where c.CAMERAID=s.camera_name and s.facultyno=?");
+                stmt4 = GlobalData.connection.prepareStatement("SELECT r.ROOMID,r.ROOMTYPE,s.CHECKOUTTIME,s.CHECKINTIME,s.ACTUALCHECKOUTTIME from ROOMS r,f_rooms_history s where r.ROOMID=s.roomno and s.facultyno=?");
+            }else{
+                stmt = GlobalData.connection.prepareStatement("SELECT b.ISBN,b.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from books b,s_books_history s where b.isbn=s.isbn and s.studentno=?");
+                stmt1 = GlobalData.connection.prepareStatement("SELECT j.JOURNALID,j.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from journals j,s_journals_history s where j.JOURNALID=s.JOURNALID and s.studentno=?");
+                stmt2 = GlobalData.connection.prepareStatement("SELECT c.CONFERENCEID,c.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from CONFERENCE_PAPERS c,s_CONFERENCE_PAPERS_history s where c.CONFERENCEID=s.CONFERENCEID and s.studentno=?");
+                stmt3 = GlobalData.connection.prepareStatement("SELECT c.CAMERAID,c.MAKE,c.MODEL,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from CAMERA c,s_camera_history s where c.CAMERAID=s.camera_name and s.studentno=?");
+                stmt4 = GlobalData.connection.prepareStatement("SELECT r.ROOMID,r.ROOMTYPE,s.CHECKOUTTIME,s.CHECKINTIME,s.ACTUALCHECKOUTTIME from ROOMS r,s_rooms_history s where r.ROOMID=s.roomno and s.studentno=?");
+            }
             stmt.setString(1,GlobalData.loginSession);
             ResultSet rs = stmt.executeQuery();
             jTableBooks.setModel(DbUtils.resultSetToTableModel(rs));
@@ -264,7 +352,43 @@ public class RequestedResources extends javax.swing.JFrame {
 
             // Close the Statement
             stmt.close();
+            
+            stmt1.setString(1,GlobalData.loginSession);
+            ResultSet rs1 = stmt1.executeQuery();
+            jTableJournals.setModel(DbUtils.resultSetToTableModel(rs1));
+            // Close the RseultSet
+            rs1.close();
 
+            // Close the Statement
+            stmt1.close();
+            
+            stmt2.setString(1,GlobalData.loginSession);
+            ResultSet rs2 = stmt2.executeQuery();
+            jTableConferenceProceesings.setModel(DbUtils.resultSetToTableModel(rs2));
+            // Close the RseultSet
+            rs2.close();
+
+            // Close the Statement
+            stmt2.close();
+            
+            stmt3.setString(1,GlobalData.loginSession);
+            ResultSet rs3 = stmt3.executeQuery();
+            jTableCamera.setModel(DbUtils.resultSetToTableModel(rs3));
+            // Close the RseultSet
+            rs3.close();
+
+            // Close the Statement
+            stmt3.close();
+            
+            stmt4.setString(1,GlobalData.loginSession);
+            ResultSet rs4 = stmt4.executeQuery();
+            jTableRooms.setModel(DbUtils.resultSetToTableModel(rs4));
+            // Close the RseultSet
+            rs4.close();
+
+            // Close the Statement
+            stmt4.close();
+            
         } catch (SQLException e) {
 
             System.out.println("Connection Failed! Check output console");
@@ -276,9 +400,15 @@ public class RequestedResources extends javax.swing.JFrame {
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
         // TODO add your handling code here:
-        new Home().setVisible(true);
+        new Queue().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonBackActionPerformed
+
+    private void jButtonBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBack1ActionPerformed
+        // TODO add your handling code here:
+        new Home().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonBack1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,21 +447,26 @@ public class RequestedResources extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonBack1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTableBooks;
     private javax.swing.JTable jTableCamera;
     private javax.swing.JTable jTableConferenceProceesings;
     private javax.swing.JTable jTableJournals;
+    private javax.swing.JTable jTableRooms;
     // End of variables declaration//GEN-END:variables
 }

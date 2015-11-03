@@ -50,6 +50,11 @@ public class Resources extends javax.swing.JFrame {
         });
 
         jButtonCameras.setText("Cameras");
+        jButtonCameras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCamerasActionPerformed(evt);
+            }
+        });
 
         jButtonBack.setText("Back");
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +131,12 @@ public class Resources extends javax.swing.JFrame {
                 new Rooms().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonRoomsActionPerformed
+
+    private void jButtonCamerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCamerasActionPerformed
+        // TODO add your handling code here:
+                new CameraData().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonCamerasActionPerformed
 
     /**
      * @param args the command line arguments
