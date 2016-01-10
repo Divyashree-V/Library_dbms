@@ -333,13 +333,13 @@ public class RequestedResources extends javax.swing.JFrame {
             
             if(GlobalData.loginType.equalsIgnoreCase("faculty")){
                 stmt = GlobalData.connection.prepareStatement("SELECT b.ISBN,b.TITLE,f.CHECKOUTDATE,f.duedate,f.ACTUALRETURNDATE from books b,f_books_history f where b.isbn=f.isbn and f.facultyno=?");
-                stmt1 = GlobalData.connection.prepareStatement("SELECT j.JOURNALID,j.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from journals j,f_journals_history s where j.JOURNALID=s.JOURNALID and s.facultyno=?");
+                stmt1 = GlobalData.connection.prepareStatement("SELECT j.ISSN,j.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from journals j,f_journals_history s where j.ISSN=s.JOURNALID and s.facultyno=?");
                 stmt2 = GlobalData.connection.prepareStatement("SELECT c.CONFERENCEID,c.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from CONFERENCE_PAPERS c,f_CONFERENCE_PAPERS_history s where c.CONFERENCEID=s.CONFERENCEID and s.facultyno=?");
                 stmt3 = GlobalData.connection.prepareStatement("SELECT c.CAMERAID,c.MAKE,c.MODEL,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from CAMERA c,f_camera_history s where c.CAMERAID=s.camera_name and s.facultyno=?");
                 stmt4 = GlobalData.connection.prepareStatement("SELECT r.ROOMID,r.ROOMTYPE,s.CHECKOUTTIME,s.CHECKINTIME,s.ACTUALCHECKOUTTIME from ROOMS r,f_rooms_history s where r.ROOMID=s.roomno and s.facultyno=?");
             }else{
                 stmt = GlobalData.connection.prepareStatement("SELECT b.ISBN,b.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from books b,s_books_history s where b.isbn=s.isbn and s.studentno=?");
-                stmt1 = GlobalData.connection.prepareStatement("SELECT j.JOURNALID,j.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from journals j,s_journals_history s where j.JOURNALID=s.JOURNALID and s.studentno=?");
+                stmt1 = GlobalData.connection.prepareStatement("SELECT j.ISSN,j.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from journals j,s_journals_history s where j.ISSN=s.JOURNALID and s.studentno=?");
                 stmt2 = GlobalData.connection.prepareStatement("SELECT c.CONFERENCEID,c.TITLE,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from CONFERENCE_PAPERS c,s_CONFERENCE_PAPERS_history s where c.CONFERENCEID=s.CONFERENCEID and s.studentno=?");
                 stmt3 = GlobalData.connection.prepareStatement("SELECT c.CAMERAID,c.MAKE,c.MODEL,s.CHECKOUTDATE,s.duedate,s.ACTUALRETURNDATE from CAMERA c,s_camera_history s where c.CAMERAID=s.camera_name and s.studentno=?");
                 stmt4 = GlobalData.connection.prepareStatement("SELECT r.ROOMID,r.ROOMTYPE,s.CHECKOUTTIME,s.CHECKINTIME,s.ACTUALCHECKOUTTIME from ROOMS r,s_rooms_history s where r.ROOMID=s.roomno and s.studentno=?");

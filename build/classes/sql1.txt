@@ -78,7 +78,7 @@ CREATE TABLE "LIBRARY"
    LIBNAME VARCHAR2(50)
  );
 
-insert into Library values(1,'JB Hunt'); 
+insert into Library values(1,'Hunt'); 
 insert into Library values(2,'DH Hill');
 
 

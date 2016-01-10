@@ -178,7 +178,7 @@ public class Login extends javax.swing.JFrame {
         //    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
                 try { 
-            if(GlobalData.loginType.equalsIgnoreCase("Student"))
+            if(GlobalData.loginType.equalsIgnoreCase("Students"))
             {
             CallableStatement stmt1 = GlobalData.connection.prepareCall("{call proc_s_notification_checkout(?)}");
                    stmt1.setString(1,jTextNumber.getText());

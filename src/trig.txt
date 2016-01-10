@@ -5,7 +5,9 @@ DECLARE
 v_count_f number;
 v_count_s number;
 BEGIN
-If (to_date(:new.actualreturndate,'DD-MON-YYYY')=to_date(sysdate,'DD-MON-YYYY') and (:old.duedate is NOT NULL)) then
+If (to_date(:new.actualreturndate,'DD-MON-YYYY'))<(to_date(:old.duedate,'DD-MON-YYYY')) then
+NULL;
+else
 update students set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where studentno=:OLD.studentno;
 insert_dues('S',:OLD.studentno,sysdate,2*(FLOOR(:new.actualreturndate-:old.duedate)));
 End if;
@@ -17,7 +19,9 @@ for each row
 DECLARE
 v_count number;
 BEGIN
-If (to_date(:new.actualreturndate,'DD-MON-YYYY')=to_date(sysdate,'DD-MON-YYYY') and (:old.duedate is NOT NULL)) then
+If (to_date(:new.actualreturndate,'DD-MON-YYYY'))<(to_date(:old.duedate,'DD-MON-YYYY')) then
+NULL;
+else
 update faculty set dues=dues + 2*(FLOOR(:new.actualreturndate-:old.duedate)) where facultyno=:OLD.facultyno;
 insert_dues('F',:OLD.facultyno,sysdate,2*(FLOOR(:new.actualreturndate-:old.duedate)));
 End if;
@@ -85,7 +89,7 @@ ex_twoweeks EXCEPTION;
 ex_course EXCEPTION;
 BEGIN
     hoursdiff:=(v_duedate - v_checkoutdate)*24;
-        dbms_output.put_line(hoursdiff);
+        dbms_output.put_line(hoursdiff);issu
 If ((v_booktype='Electronic and Physical') and (v_e_p='Electronic')) then
     insert into s_books_history values(v_studentno,v_isbn,v_checkoutdate,NULL,NULL);
 else
@@ -174,7 +178,7 @@ End if;
 End if; 
 EXCEPTION
 When ex_twoweeks then
-raise_application_error (-20001,'You cant checkout for more than two weeks');
+raise_application_error (-20001,'You cant checkout for more than one month');
 When ex_fourhours then
 raise_application_error (-20001,'You cant checkout a RESERVED for more than four hours');
 END;
@@ -250,7 +254,7 @@ set actualreturndate=sysdate
 where facultyno=v_facultyno and 
 isbn=v_isbn and 
 actualreturndate is NULL;
-if (v_count_ebook=0 OR v_count_hard>0) then
+if ((v_count_ebook=0 OR v_count_hard>0)and (v_count_queue=0)) then
 update books 
 set number_of_copies=number_of_copies + 1 
 where ISBN=v_ISBN;
@@ -281,7 +285,11 @@ v_duedate date
 IS
 v_reserved varchar2(50);
 v_booktype varchar2(50);
+v_count_queue number:=0;
+ex_wait EXCEPTION;
 BEGIN
+select count(*) into v_count_queue from queue_books where isbn=v_isbn;
+if v_count_queue=0 then
 update s_books_history 
 set actualreturndate=sysdate 
 where studentno=v_studentno and 
@@ -289,6 +297,12 @@ isbn=v_isbn and
 actualreturndate is NULL;
 select reserved,booktype into v_reserved,v_booktype from books where isbn=v_isbn;
 proc_stud_checkout_books(v_studentno,v_isbn,sysdate,v_duedate ,v_reserved ,v_booktype,NULL);
+else
+RAISE ex_wait;
+End if;
+EXCEPTION
+When ex_wait then
+raise_application_error (-20001,'This cannot be renewed as there are people in queue for this resource.');
 END;
 
 create or replace procedure proc_fac_renew_books(
@@ -299,7 +313,11 @@ v_duedate date
 IS
 v_reserved varchar2(50);
 v_booktype varchar2(50);
+v_count_queue number:=0;
+ex_wait EXCEPTION;
 BEGIN
+select count(*) into v_count_queue from queue_books where isbn=v_isbn;
+if v_count_queue=0 then
 update f_books_history 
 set actualreturndate=sysdate 
 where facultyno=v_facultyno and 
@@ -307,6 +325,12 @@ isbn=v_isbn and
 actualreturndate is NULL;
 select reserved,booktype into v_reserved,v_booktype from books where isbn=v_isbn;
 proc_fac_checkout_books(v_facultyno,v_isbn,sysdate,v_duedate ,v_reserved ,v_booktype,NULL);
+else
+RAISE ex_wait;
+End if;
+EXCEPTION
+When ex_wait then
+raise_application_error (-20001,'This cannot be renewed as there are people in queue for this resource.');
 END;
 
 

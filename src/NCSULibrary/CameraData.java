@@ -291,8 +291,8 @@ public class CameraData extends javax.swing.JFrame {
             {
             PreparedStatement stmt = GlobalData.connection.prepareStatement("SELECT CAMERAID,MAKE,MODEL,CONFIG_LENS,MEMORY_AVAILABLE,LIBRARY_NAME from CAMERA "
                     + "MINUS "
-                    + "SELECT c.CAMERAID,c.MAKE,c.MODEL,c.CONFIG_LENS,c.MEMORY_AVAILABLE,c.LIBRARY_NAME from CAMERA c,s_camera_history s, queue_camera q where (s.duedate<to_date(?,'DD-MON-YYYY hh24:mi:ss')) OR (?=s.studentno AND c.CAMERAID=s.camera_name AND (s.status='H' OR s.status='C'))"
-                    +"MINUS SELECT c.CAMERAID,c.MAKE,c.MODEL,c.CONFIG_LENS,c.MEMORY_AVAILABLE,c.LIBRARY_NAME from CAMERA c,f_camera_history f, queue_camera q where (f.duedate<to_date(?,'DD-MON-YYYY hh24:mi:ss')) OR (c.CAMERAID=f.camera_name AND f.status='C')");
+                    + "SELECT c.CAMERAID,c.MAKE,c.MODEL,c.CONFIG_LENS,c.MEMORY_AVAILABLE,c.LIBRARY_NAME from CAMERA c,s_camera_history s where c.cameraid=s.camera_name and (s.duedate>to_date(?,'DD-MON-YYYY hh24:mi:ss') and s.actualreturndate is NULL ) OR (?=s.studentno AND c.CAMERAID=s.camera_name AND (s.status='H' OR s.status='C'))"
+                    +"MINUS SELECT c.CAMERAID,c.MAKE,c.MODEL,c.CONFIG_LENS,c.MEMORY_AVAILABLE,c.LIBRARY_NAME from CAMERA c,f_camera_history f, queue_camera q where c.cameraid=f.camera_name and (f.duedate>to_date(?,'DD-MON-YYYY hh24:mi:ss') and f.actualreturndate is NULL) OR (c.CAMERAID=f.camera_name AND f.status='C')");
 
             stmt.setString(1,jTextField1CheckoutDate.getText());
             stmt.setString(2,GlobalData.loginSession);
